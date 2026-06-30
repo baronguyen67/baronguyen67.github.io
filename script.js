@@ -32,20 +32,53 @@ if ('IntersectionObserver' in window && revealEls.length) {
 
   revealEls.forEach(el => observer.observe(el));
 } else {
-  // Fallback: just show everything
   revealEls.forEach(el => el.classList.add('is-visible'));
 }
 
-// ===== Contact form (front-end only placeholder) =====
+// ===== Contact form — Formspree =====
 const contactForm = document.getElementById('contactForm');
 const formStatus = document.getElementById('formStatus');
+const submitBtn = contactForm ? contactForm.querySelector('button[type="submit"]') : null;
 
 if (contactForm) {
-  contactForm.addEventListener('submit', (e) => {
+  contactForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    // NOTE: Hiện tại form này chưa gửi email thật.
-    // Để gửi được, kết nối với Formspree / EmailJS (xem hướng dẫn kèm theo).
-    formStatus.textContent = 'Form demo — chưa kết nối dịch vụ gửi email. Xem hướng dẫn để bật chức năng gửi thật.';
-    contactForm.reset();
+
+    const data = new FormData(contactForm);
+
+    // Disable button while sending
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending…';
+    }
+    formStatus.textContent = '';
+    formStatus.className = 'form-status';
+
+    try {
+      const response = await fetch('https://formspree.io/f/xjgqewdb', {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (response.ok) {
+        formStatus.textContent = '✓ Message sent! I\'ll get back to you soon.';
+        formStatus.classList.add('success');
+        contactForm.reset();
+      } else {
+        const json = await response.json();
+        const msg = json.errors ? json.errors.map(e => e.message).join(', ') : 'Something went wrong.';
+        formStatus.textContent = '✗ ' + msg;
+        formStatus.classList.add('error');
+      }
+    } catch (err) {
+      formStatus.textContent = '✗ Network error — please try again or email me directly.';
+      formStatus.classList.add('error');
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send message →';
+      }
+    }
   });
 }
