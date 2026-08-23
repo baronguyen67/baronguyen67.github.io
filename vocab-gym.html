@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Vocabulary Gym — Ôn từ vựng theo ngữ cảnh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14213D;
+    --ink-soft:#1D2B4F;
+    --parchment:#FBF3E4;
+    --gold:#E8A33D;
+    --gold-deep:#C4841F;
+    --rose:#D1495B;
+    --rose-deep:#A6334A;
+    --teal:#2A6F77;
+    --cream-text:#F7F1E3;
+    --ink-text:#1B1B1B;
+    --radius:18px;
+    --font-display:'Fraunces', Georgia, serif;
+    --font-body:'Work Sans', 'Segoe UI', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+    --safe-b: env(safe-area-inset-bottom, 0px);
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color: transparent;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    min-height:100vh;
+    background:
+      radial-gradient(circle at 15% 10%, rgba(232,163,61,0.12), transparent 40%),
+      radial-gradient(circle at 85% 90%, rgba(42,111,119,0.18), transparent 45%),
+      var(--ink);
+    color:var(--cream-text);
+    font-family:var(--font-body);
+    display:flex;
+    justify-content:center;
+    padding:24px 14px calc(40px + var(--safe-b));
+  }
+  .app{width:100%;max-width:680px;}
+  .eyebrow{
+    font-family:var(--font-mono);
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    font-size:11px;
+    color:var(--gold);
+    margin-bottom:6px;
+  }
+  h1{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:clamp(24px,6vw,38px);
+    margin:0 0 6px;
+    line-height:1.12;
+  }
+  .sub{color:#C9C2AE;font-size:14px;margin-bottom:22px;line-height:1.55;}
+
+  /* ---- Topic chips ---- */
+  .chip-grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;}
+  .chip{
+    font-family:var(--font-body);font-weight:600;font-size:13.5px;
+    padding:10px 14px;border-radius:999px;
+    border:2px solid rgba(247,241,227,0.18);
+    background:rgba(255,255,255,0.04);
+    color:var(--cream-text);
+    cursor:pointer;user-select:none;touch-action:manipulation;
+    transition:all .15s ease;
+    display:flex;align-items:center;gap:6px;
+  }
+  .chip.active{background:var(--gold);border-color:var(--gold);color:var(--ink-text);}
+  .chip:active{transform:scale(0.96);}
+  .count-note{font-family:var(--font-mono);font-size:12.5px;color:#B9B092;margin-bottom:18px;}
+
+  /* ---- Progress trail ---- */
+  .trail-wrap{margin-bottom:16px;}
+  .trail{
+    display:flex;flex-wrap:wrap;gap:4px;
+    padding:10px 12px;
+    background:var(--ink-soft);
+    border-radius:14px;
+    border:1px solid rgba(232,163,61,0.15);
+    max-height:96px;overflow-y:auto;
+  }
+  .stamp{
+    width:16px;height:16px;border-radius:50%;
+    border:2px solid rgba(247,241,227,0.3);
+    display:flex;align-items:center;justify-content:center;
+    font-size:8px;font-family:var(--font-mono);font-weight:600;
+    transition:all .3s ease;flex-shrink:0;
+  }
+  .stamp.correct{border-color:var(--gold);background:rgba(232,163,61,0.25);color:var(--gold);}
+  .stamp.wrong{border-color:var(--rose);background:rgba(209,73,91,0.25);color:var(--rose);}
+  .stamp.current{border-color:var(--cream-text);box-shadow:0 0 0 3px rgba(247,241,227,0.15);transform:scale(1.25);}
+
+  .top-stats{display:flex;justify-content:space-between;align-items:center;font-family:var(--font-mono);font-size:12px;color:#C9C2AE;margin-bottom:8px;}
+  .streak{color:var(--gold);font-weight:600;}
+
+  /* ---- Cards ---- */
+  .card{
+    background:var(--parchment);
+    color:var(--ink-text);
+    border-radius:var(--radius);
+    padding:24px 20px 22px;
+    box-shadow:0 18px 40px rgba(0,0,0,0.35);
+    position:relative;overflow:hidden;
+    opacity:0;animation:cardIn .35s ease forwards;
+  }
+  @keyframes cardIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+  .card::before{
+    content:"";position:absolute;top:0;left:0;right:0;height:5px;
+    background:linear-gradient(90deg,var(--gold),var(--teal));
+  }
+  .topic-badge{
+    display:inline-flex;align-items:center;gap:6px;
+    font-family:var(--font-mono);font-size:11px;font-weight:600;
+    padding:4px 10px;border-radius:999px;margin-bottom:12px;
+    background:rgba(0,0,0,0.05);
+  }
+  .meta-row{
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:var(--font-mono);font-size:12px;color:#7A7259;
+    margin-bottom:6px;
+  }
+  .score-pill{background:var(--ink);color:var(--cream-text);padding:4px 10px;border-radius:999px;font-size:12px;}
+  .sentence{
+    font-family:var(--font-display);
+    font-size:clamp(18px,4.6vw,22px);
+    line-height:1.5;margin-bottom:20px;
+  }
+  .blank{display:inline-block;min-width:80px;border-bottom:3px solid var(--gold-deep);text-align:center;font-weight:600;color:var(--gold-deep);}
+  .options{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:6px;}
+  @media (max-width:560px){.options{grid-template-columns:1fr;}}
+  .opt{
+    font-family:var(--font-body);font-size:15px;font-weight:600;
+    padding:15px 16px;min-height:48px;
+    border-radius:12px;border:2px solid #E2D6B8;background:#fff;color:var(--ink-text);
+    cursor:pointer;text-align:left;touch-action:manipulation;
+    transition:transform .1s ease, border-color .15s ease, background .15s ease;
+  }
+  .opt:hover:not(:disabled){border-color:var(--teal);}
+  .opt:active:not(:disabled){transform:scale(0.98);}
+  .opt:focus-visible{outline:3px solid var(--teal);outline-offset:2px;}
+  .opt:disabled{cursor:default;}
+  .opt.correct{background:rgba(232,163,61,0.18);border-color:var(--gold-deep);}
+  .opt.wrong{background:rgba(209,73,91,0.15);border-color:var(--rose-deep);}
+  .opt.dim{opacity:0.5;}
+
+  .feedback{margin-top:14px;padding:14px 15px;border-radius:12px;font-size:14px;line-height:1.55;display:none;}
+  .feedback.show{display:block;animation:cardIn .25s ease;}
+  .feedback.correct{background:rgba(232,163,61,0.15);border:1px solid var(--gold-deep);}
+  .feedback.wrong{background:rgba(209,73,91,0.12);border:1px solid var(--rose-deep);}
+  .feedback b{font-family:var(--font-mono);}
+
+  .next-btn, .primary-btn{
+    margin-top:16px;width:100%;background:var(--ink);color:var(--cream-text);border:none;
+    padding:15px;border-radius:12px;font-family:var(--font-body);font-weight:600;font-size:15px;
+    cursor:pointer;display:none;touch-action:manipulation;transition:background .15s ease;
+  }
+  .next-btn.show{display:block;position:sticky;bottom:calc(10px + var(--safe-b));}
+  .next-btn:hover, .primary-btn:hover{background:var(--teal);}
+  .next-btn:active, .primary-btn:active{transform:scale(0.98);}
+  .primary-btn{display:block;}
+  .primary-btn:disabled{opacity:0.4;cursor:not-allowed;}
+
+  .center-screen{text-align:center;padding:34px 22px;}
+  .big-emoji{font-size:42px;margin-bottom:10px;}
+
+  textarea{
+    width:100%;min-height:88px;font-family:var(--font-body);font-size:14.5px;
+    padding:12px 14px;border-radius:12px;border:2px solid #E2D6B8;resize:vertical;
+    color:var(--ink-text);margin-bottom:10px;
+  }
+  .oe-block{margin-bottom:22px;}
+  .oe-q{font-family:var(--font-display);font-size:16.5px;margin-bottom:8px;font-weight:600;}
+  .grading-note{font-size:13px;color:#7A7259;margin-top:8px;display:none;}
+  .grading-note.show{display:block;}
+  .match-bar{height:8px;border-radius:999px;background:#E9DFC6;overflow:hidden;margin:8px 0;}
+  .match-fill{height:100%;background:linear-gradient(90deg,var(--rose),var(--gold),var(--teal));width:0%;transition:width .6s ease;}
+
+  .topic-breakdown{margin-top:14px;text-align:left;}
+  .tb-row{display:flex;align-items:center;gap:8px;font-size:13px;margin-bottom:8px;}
+  .tb-label{width:150px;flex-shrink:0;font-family:var(--font-mono);font-size:11.5px;color:#5c5642;}
+  .tb-track{flex:1;height:8px;border-radius:999px;background:#E9DFC6;overflow:hidden;}
+  .tb-fill{height:100%;background:var(--teal);}
+  .tb-pct{font-family:var(--font-mono);font-size:11.5px;width:38px;text-align:right;}
+
+  .hidden{display:none;}
+  .word-particle{position:fixed;pointer-events:none;font-family:var(--font-mono);font-weight:700;color:var(--gold);font-size:14px;z-index:50;animation:floatUp 1s ease-out forwards;}
+  @keyframes floatUp{0%{opacity:1;transform:translateY(0) rotate(0deg);}100%{opacity:0;transform:translateY(-60px) rotate(20deg);}}
+  .shake{animation:shakeAnim .4s ease;}
+  @keyframes shakeAnim{0%,100%{transform:translateX(0);}20%{transform:translateX(-7px);}40%{transform:translateX(7px);}60%{transform:translateX(-4px);}80%{transform:translateX(4px);}}
+  @media (prefers-reduced-motion: reduce){
+    .stamp, .opt, .word-particle, .shake, .card{animation:none !important;transition:none !important;}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="eyebrow">Vocabulary Gym</div>
+  <h1>Ôn từ vựng theo ngữ cảnh</h1>
+  <div class="sub">41 từ vựng, 5 chủ đề — điền từ vào câu thực tế, có âm thanh phản hồi và chấm điểm tự luận bằng AI.</div>
+
+  <!-- TOPIC SELECT SCREEN -->
+  <div id="topicScreen">
+    <div class="chip-grid" id="chipGrid"></div>
+    <div class="count-note" id="countNote"></div>
+    <div class="card center-screen">
+      <div class="big-emoji">🧠</div>
+      <div class="oe-q" style="margin-bottom:10px;">Sẵn sàng luyện chưa?</div>
+      <div style="font-size:13.5px;color:#5c5642;margin-bottom:18px;">Chọn từ đúng để lấp đầy câu. Đúng thì có nhạc vui, sai thì có nhạc buồn — luôn kèm giải thích để nhớ lâu hơn.</div>
+      <button class="primary-btn" id="startBtn" onclick="startQuiz()">Bắt đầu</button>
+    </div>
+  </div>
+
+  <!-- QUIZ AREA (hidden until start) -->
+  <div id="quizArea" class="hidden">
+    <div class="top-stats">
+      <span id="qCounter">Câu 1/41</span>
+      <span class="streak" id="streakBox"></span>
+      <span class="score-pill" id="scorePill">Điểm: 0</span>
+    </div>
+    <div class="trail-wrap"><div class="trail" id="trail"></div></div>
+
+    <div class="card" id="quizScreen">
+      <div class="topic-badge" id="topicBadge"></div>
+      <div class="sentence" id="sentenceText"></div>
+      <div class="options" id="optionsWrap"></div>
+      <div class="feedback" id="feedbackBox"></div>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Câu tiếp theo →</button>
+    </div>
+  </div>
+
+  <!-- MCQ RESULT -->
+  <div class="card hidden center-screen" id="mcqDoneScreen">
+    <div class="big-emoji">🏁</div>
+    <div class="oe-q">Xong phần trắc nghiệm!</div>
+    <div style="margin:10px 0 18px;font-size:15px;">Bạn trả lời đúng <b id="mcqFinalScore"></b>/<span id="mcqFinalTotal"></span> câu.</div>
+    <button class="primary-btn" onclick="startOpenEnded()">Sang phần tự luận →</button>
+  </div>
+
+  <!-- OPEN ENDED SCREEN -->
+  <div class="card hidden" id="oeScreen">
+    <div class="meta-row"><span>Phần tự luận · 4 câu</span></div>
+    <div id="oeContainer"></div>
+    <button class="primary-btn" id="oeSubmitAll" onclick="submitAllOpenEnded()">Nộp bài & chấm điểm</button>
+  </div>
+
+  <!-- FINAL SCREEN -->
+  <div class="card hidden center-screen" id="finalScreen">
+    <div class="big-emoji">🎉</div>
+    <div class="oe-q">Hoàn thành Vocabulary Gym!</div>
+    <div style="margin:14px 0;font-size:15px;line-height:1.7;" id="finalSummary"></div>
+    <div class="topic-breakdown" id="topicBreakdown"></div>
+    <button class="primary-btn" onclick="location.reload()" style="margin-top:18px;">Luyện lại từ đầu</button>
+  </div>
+</div>
+
+<script>
+/* ---------------- Topic meta ---------------- */
+const TOPICS = {
+  health:{label:'Sức khỏe & Cơ thể', emoji:'🩺', color:'#7C9885'},
+  personality:{label:'Tính cách & Con người', emoji:'🧭', color:'#8E7CC3'},
+  career:{label:'Sự nghiệp & Học thuật', emoji:'🎓', color:'#2A6F77'},
+  business:{label:'Kinh doanh & Thương mại', emoji:'🌐', color:'#4A6FA5'},
+  workplace:{label:'Quy tắc & Tư duy công sở', emoji:'📏', color:'#A6693F'}
+};
+
+/* ---------------- Data (41 words) ---------------- */
+const allQuestions = [
+  // Health & Body
+  {topic:'health', s:"My grandmother has a small ___ near her left eyebrow that she says brings good luck.", opts:["Mole","Freckles","Bruise","Canker sore"], correct:"Mole", vi:"nốt ruồi", note:"'Mole' là nốt ruồi trên da, thường nhỏ và sẫm màu hơn da xung quanh."},
+  {topic:'health', s:"After a summer of hiking without sunscreen, tiny ___ appeared across her nose and cheeks.", opts:["Freckles","Mole","Dark circles","Bruise"], correct:"Freckles", vi:"tàn nhang", note:"'Freckles' là các đốm nhỏ màu nâu nhạt do nắng, khác 'mole' (nốt ruồi đơn lẻ)."},
+  {topic:'health', s:"He hadn't slept in two days before the deadline, and the ___ under his eyes gave it away.", opts:["Dark circles","Freckles","Swollen","Canker sore"], correct:"Dark circles", vi:"quầng thâm mắt", note:"'Dark circles' là vùng da thâm quanh mắt, thường do thiếu ngủ."},
+  {topic:'health', s:"Eating spicy food is painful right now because I have a ___ on the inside of my cheek.", opts:["Canker sore","Bruise","Mole","Muscle cramp"], correct:"Canker sore", vi:"vết lở/nhiệt miệng", note:"'Canker sore' là vết loét nhỏ, đau bên trong miệng — hay gọi là 'nhiệt miệng'."},
+  {topic:'health', s:"The doctor said my tonsils ___ because of the infection, causing pain when I swallow.", opts:["are inflamed","are swollen","are bruised","are stubborn"], correct:"are inflamed", vi:"bị viêm", note:"'Be inflamed' nhấn mạnh tình trạng viêm (đỏ, nóng, đau) do nhiễm trùng."},
+  {topic:'health', s:"After twisting his ankle during the match, it became so ___ that he could barely put on his shoe.", opts:["swollen","inflamed","bruised","precious"], correct:"swollen", vi:"sưng (to)", note:"'Swollen' mô tả kích thước phồng to lên, không nhất thiết do viêm."},
+  {topic:'health', s:"She bumped her leg on the coffee table, and a dark ___ appeared the next morning.", opts:["bruise","mole","freckles","dark circles"], correct:"bruise", vi:"vết bầm tím", note:"'Bruise' là vết bầm tím do va đập, đổi màu theo thời gian."},
+  {topic:'health', s:"Midway through the marathon, a sudden ___ in his calf forced him to stop and stretch.", opts:["muscle cramp","bruise","canker sore","mole"], correct:"muscle cramp", vi:"chuột rút", note:"'Muscle cramp' là hiện tượng cơ co thắt đột ngột gây đau."},
+  {topic:'health', s:"Years of stress and irregular meals finally caught up with him — the doctor diagnosed a ___.", opts:["peptic ulcer","canker sore","muscle cramp","bruise"], correct:"peptic ulcer", vi:"loét dạ dày - tá tràng", note:"'Peptic ulcer' là vết loét ở dạ dày/tá tràng, liên quan đến stress và ăn uống thất thường."},
+
+  // Personality & People
+  {topic:'personality', s:"No matter how much evidence we showed him, he was too ___ to change his opinion.", opts:["stubborn","naughty","precious","universal"], correct:"stubborn", vi:"bướng bỉnh, cứng đầu", note:"'Stubborn' mô tả người nhất quyết không đổi ý dù có lý lẽ thuyết phục."},
+  {topic:'personality', s:"The puppy chewed up another pair of shoes — he's being so ___ this week.", opts:["naughty","stubborn","genius","precious"], correct:"naughty", vi:"nghịch ngợm", note:"'Naughty' thường dùng cho trẻ em hoặc thú cưng nghịch ngợm."},
+  {topic:'personality', s:"Some call her a marketing ___ because every campaign she runs goes viral.", opts:["genius","stubborn person","naughty person","precious talent"], correct:"genius", vi:"thiên tài", note:"'Genius' chỉ người có tài năng xuất chúng, vượt trội hẳn người thường."},
+  {topic:'personality', s:"This necklace is ___ to me because it belonged to my late grandmother.", opts:["precious","universal","stubborn","naughty"], correct:"precious", vi:"quý giá", note:"'Precious' chỉ những thứ có giá trị lớn về vật chất hoặc tình cảm."},
+  {topic:'personality', s:"She's clearly ___ enough to lead the project without constant supervision.", opts:["competent","conscious","naughty","stubborn"], correct:"competent", vi:"có năng lực", note:"'Competent' mô tả người đủ khả năng/kỹ năng để làm tốt một việc."},
+  {topic:'personality', s:"He made a ___ effort to speak more slowly during the presentation.", opts:["conscious","competent","perceived","naughty"], correct:"conscious", vi:"có ý thức, chủ ý", note:"'Conscious effort' là nỗ lực có chủ đích, được thực hiện một cách có ý thức."},
+  {topic:'personality', s:"The new policy was ___ as unfair by most junior staff, even though management meant well.", opts:["perceived","conscious","competent","convoluted"], correct:"perceived", vi:"được cho là, được nhận thức là", note:"'Perceived as' diễn tả cách một việc được người khác nhìn nhận — có thể chủ quan, khác với thực tế."},
+  {topic:'personality', s:"Investors who are ___ tend to prefer government bonds over volatile stocks.", opts:["risk averse","counterproductive","competent","conscious"], correct:"risk averse", vi:"né tránh rủi ro", note:"'Risk averse' mô tả người/tổ chức có xu hướng tránh rủi ro, ưu tiên an toàn."},
+
+  // Career & Academic
+  {topic:'career', s:"Before opening his own bakery, he completed a three-year ___ under a master baker in Taipei.", opts:["apprenticeship","entrepreneurship","publication","embargo"], correct:"apprenticeship", vi:"quá trình học nghề", note:"'Apprenticeship' là giai đoạn học nghề thực hành dưới sự hướng dẫn của thợ lành nghề."},
+  {topic:'career', s:"At just 22, she became a successful ___, launching her own cross-border e-commerce startup.", opts:["entrepreneur","apprentice","genius","publication"], correct:"entrepreneur", vi:"doanh nhân khởi nghiệp", note:"'Entrepreneur' là người sáng lập và điều hành công việc kinh doanh, chấp nhận rủi ro để tạo giá trị mới."},
+  {topic:'career', s:"Her list of academic ___ includes over twenty papers in international journals.", opts:["publications","journals","embargoes","apprenticeships"], correct:"publications", vi:"ấn phẩm/công trình đã xuất bản", note:"'Publications' chỉ các bài viết, công trình đã công bố — nghĩa rộng hơn 'journals'."},
+  {topic:'career', s:"The findings were published in several peer-reviewed ___, including one based in Taiwan.", opts:["journals","publications","embargoes","entrepreneurs"], correct:"journals", vi:"tạp chí (học thuật)", note:"'Journals' là các tạp chí học thuật định kỳ — nơi đăng các 'publications'."},
+  {topic:'career', s:"One scandal was enough to ___ his once-promising career in politics.", opts:["capsize","showcase","elaborate","carry out"], correct:"capsize", vi:"làm chìm, phá hỏng (sự nghiệp)", note:"'Capsize' vốn nghĩa là lật thuyền, ở đây dùng ẩn dụ cho việc phá hỏng hoàn toàn một sự nghiệp/kế hoạch."},
+  {topic:'career', s:"The negotiations between the two companies are still ___, with no final agreement yet.", opts:["ongoing","convoluted","capsized","unforeseen"], correct:"ongoing", vi:"đang diễn ra, tiếp diễn", note:"'Ongoing' mô tả một việc vẫn đang tiếp tục xảy ra, chưa kết thúc."},
+  {topic:'career', s:"The trade fair is a great chance to ___ our new product line to international buyers.", opts:["showcase","leverage","capsize","elaborate"], correct:"showcase", vi:"trưng bày, giới thiệu nổi bật", note:"'Showcase' (động từ) nghĩa là trình bày/giới thiệu điều gì đó theo cách nổi bật nhất."},
+
+  // Business & Trade
+  {topic:'business', s:"The government imposed a trade ___ on the country, banning all exports and imports.", opts:["embargo","apprenticeship","publication","entrepreneur"], correct:"embargo", vi:"lệnh cấm vận", note:"'Embargo' là lệnh cấm chính thức về thương mại/giao dịch với một quốc gia hay tổ chức."},
+  {topic:'business', s:"Kindness is often considered a ___ value, understood across every culture.", opts:["universal","precious","stubborn","elaborate"], correct:"universal", vi:"phổ quát, toàn cầu", note:"'Universal' mô tả điều đúng/áp dụng ở khắp mọi nơi, không giới hạn văn hóa."},
+  {topic:'business', s:"The product launch was delayed due to ___, including a supplier's factory shutdown.", opts:["unforeseen circumstances","elaborate plans","publications","an embargo"], correct:"unforeseen circumstances", vi:"những hoàn cảnh không lường trước", note:"Cụm này dùng khi có sự việc bất ngờ, ngoài dự đoán, ảnh hưởng đến kế hoạch."},
+  {topic:'business', s:"Mr. Tran, ___ a factory manager, now runs his own export business.", opts:["formerly","abruptly","elaborately","precious"], correct:"formerly", vi:"trước đây (từng là)", note:"'Formerly' dùng để nói về vai trò/tình trạng trong quá khứ, nay đã thay đổi."},
+  {topic:'business', s:"In response to the new import tax, the country announced a ___ on foreign steel.", opts:["retaliatory tariff","embargo","leverage","constraint"], correct:"retaliatory tariff", vi:"thuế trả đũa", note:"'Retaliatory tariff' là mức thuế áp lên hàng nhập khẩu để đáp trả một nước khác đã đánh thuế trước."},
+  {topic:'business', s:"The startup used its strong social media following as ___ when negotiating with investors.", opts:["leverage","constraints","etiquette","showcase"], correct:"leverage", vi:"đòn bẩy, lợi thế để mặc cả", note:"'Leverage' (danh từ) là lợi thế/công cụ giúp tăng sức mạnh đàm phán."},
+  {topic:'business', s:"Working within a tight budget, the team faced serious ___ on what they could deliver.", opts:["constraints","leverage","etiquette","embargo"], correct:"constraints", vi:"những ràng buộc, giới hạn", note:"'Constraints' là những giới hạn (thời gian, ngân sách...) khiến ta không thể làm mọi thứ mình muốn."},
+
+  // Workplace rules & mindset
+  {topic:'workplace', s:"Understanding local business ___, such as how to exchange name cards properly, is essential when working with Taiwanese partners.", opts:["etiquette","unspoken rules","rule of thumb","constraints"], correct:"etiquette", vi:"phép lịch sự, quy tắc ứng xử", note:"'Etiquette' là bộ quy tắc ứng xử lịch sự, thường được biết đến rộng rãi trong một bối cảnh cụ thể."},
+  {topic:'workplace', s:"Every office has its own ___ about who gets to speak first in meetings.", opts:["unspoken rules","etiquette","rule of thumb","constraints"], correct:"unspoken rules", vi:"luật ngầm, quy tắc không thành văn", note:"'Unspoken rules' là những chuẩn mực mà ai cũng tuân theo dù không ai nói ra."},
+  {topic:'workplace', s:"As a ___, you should always confirm a meeting time 24 hours in advance.", opts:["rule of thumb","unspoken rule","etiquette","constraint"], correct:"rule of thumb", vi:"quy tắc kinh nghiệm chung", note:"'Rule of thumb' là một hướng dẫn thực tế, dựa trên kinh nghiệm chứ không phải lý thuyết chặt chẽ."},
+  {topic:'workplace', s:"Too many approval steps can ___ the entire workflow and slow everything down.", opts:["clog up","leverage","showcase","capsize"], correct:"clog up", vi:"làm tắc nghẽn, ùn ứ", note:"'Clog up' vốn nghĩa là làm tắc (ống nước...), ở đây ẩn dụ cho việc làm nghẽn quy trình làm việc."},
+  {topic:'workplace', s:"The refund process is so ___ that most customers give up halfway through.", opts:["convoluted","ongoing","competent","conscious"], correct:"convoluted", vi:"rắc rối, phức tạp khó hiểu", note:"'Convoluted' mô tả một quy trình/lập luận quá phức tạp, khó theo dõi."},
+  {topic:'workplace', s:"Micromanaging every employee can be ___, since it lowers morale and slows down output.", opts:["counterproductive","convoluted","ongoing","risk averse"], correct:"counterproductive", vi:"phản tác dụng", note:"'Counterproductive' mô tả hành động gây ra kết quả ngược lại với mục đích ban đầu."},
+  {topic:'workplace', s:"Could you ___ on your proposal? I don't fully understand the second point.", opts:["elaborate","carry out","refrain from","embargo"], correct:"elaborate", vi:"giải thích/trình bày chi tiết hơn", note:"'Elaborate (on something)' nghĩa là nói/viết chi tiết, rõ ràng hơn về một ý đã đề cập."},
+  {topic:'workplace', s:"Passengers are asked to ___ smoking throughout the flight.", opts:["refrain from","carry out","elaborate on","embargo"], correct:"refrain from", vi:"kiềm chế, tránh (làm gì)", note:"'Refrain from + V-ing' là cách nói lịch sự để yêu cầu ai đó không làm việc gì."},
+  {topic:'workplace', s:"The meeting ended ___ when the CEO received an urgent phone call.", opts:["abruptly","formerly","elaborately","universally"], correct:"abruptly", vi:"đột ngột", note:"'Abruptly' mô tả cách một việc xảy ra hoặc kết thúc bất ngờ, không báo trước."},
+  {topic:'workplace', s:"The research team will ___ a series of experiments before publishing their findings.", opts:["carry out","refrain from","elaborate","embargo"], correct:"carry out", vi:"thực hiện, tiến hành", note:"'Carry out' nghĩa là thực hiện một kế hoạch, nhiệm vụ hoặc thí nghiệm đến khi hoàn thành."}
+];
+
+const openEnded = [
+  {q:"Explain the difference in meaning and usage between \"formerly\" and \"abruptly\", then give one example sentence for each.",
+   ref:"Formerly means 'in the past, but not now' — it describes someone's earlier role, status, or condition (e.g., 'She was formerly a teacher'). Abruptly means 'suddenly, without warning' — it describes the manner in which something happens or ends (e.g., 'The music stopped abruptly'). The two words are unrelated in meaning: one refers to a past state, the other to a sudden manner of action."},
+  {q:"Describe a short scenario (2–3 sentences) using \"be inflamed\", \"swollen\", and \"bruise\" to talk about a sports injury.",
+   ref:"After falling hard during the game, his knee became swollen and inflamed within an hour. By the next morning, a large bruise had also formed around the joint, making it painful to walk."},
+  {q:"Explain the difference between \"etiquette\", \"unspoken rules\", and \"rule of thumb\", with one example for each.",
+   ref:"Etiquette refers to the formal or informal code of polite behavior expected in a specific setting (e.g., 'Business etiquette includes exchanging business cards with both hands'). Unspoken rules are norms everyone follows without anyone stating them officially (e.g., 'There's an unspoken rule that you never take the last slice of cake in the office'). A rule of thumb is a practical, general guideline based on experience rather than strict theory (e.g., 'As a rule of thumb, budget 20% extra for unexpected costs'). Etiquette is about politeness, unspoken rules are implicit social norms, and a rule of thumb is a practical heuristic."},
+  {q:"Using \"leverage\", \"constraints\", and \"risk averse\" together, write 2–3 sentences describing a negotiation scenario.",
+   ref:"Because the company was risk averse, it refused to commit to a long-term contract despite tight budget constraints. However, the negotiator used the client's urgent deadline as leverage to secure better payment terms."}
+];
+
+/* ---------------- State ---------------- */
+let questions = [];
+let order = [];
+let current = 0;
+let score = 0;
+let streak = 0;
+let selectedTopics = new Set(Object.keys(TOPICS));
+const results = [];
+
+/* ---------------- Audio ---------------- */
+let actx;
+function ctx(){ if(!actx) actx = new (window.AudioContext||window.webkitAudioContext)(); return actx; }
+function tone(freq, start, dur, type='sine', gain=0.18){
+  const c = ctx();
+  const osc = c.createOscillator();
+  const g = c.createGain();
+  osc.type = type; osc.frequency.value = freq;
+  g.gain.setValueAtTime(0, c.currentTime+start);
+  g.gain.linearRampToValueAtTime(gain, c.currentTime+start+0.02);
+  g.gain.exponentialRampToValueAtTime(0.001, c.currentTime+start+dur);
+  osc.connect(g); g.connect(c.destination);
+  osc.start(c.currentTime+start); osc.stop(c.currentTime+start+dur+0.05);
+}
+function playCorrect(){ tone(523.25,0,0.14); tone(659.25,0.1,0.14); tone(783.99,0.2,0.22); }
+function playWrong(){ tone(300,0,0.18,'sawtooth',0.12); tone(210,0.14,0.28,'sawtooth',0.12); }
+
+function floatWords(container){
+  const rect = container.getBoundingClientRect();
+  for(let i=0;i<6;i++){
+    const el = document.createElement('div');
+    el.className='word-particle';
+    el.textContent = ['✓','nice!','+1','✨'][Math.floor(Math.random()*4)];
+    el.style.left = (rect.left + rect.width*Math.random())+'px';
+    el.style.top = (rect.top + rect.height*0.4)+'px';
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(),1000);
+  }
+}
+
+/* ---------------- Topic selection screen ---------------- */
+function buildChips(){
+  const grid = document.getElementById('chipGrid');
+  grid.innerHTML='';
+  Object.entries(TOPICS).forEach(([id,t])=>{
+    const chip = document.createElement('button');
+    chip.className='chip active';
+    chip.id = 'chip-'+id;
+    chip.innerHTML = `${t.emoji} ${t.label}`;
+    chip.onclick = ()=>toggleTopic(id);
+    grid.appendChild(chip);
+  });
+  updateCountNote();
+}
+function toggleTopic(id){
+  if(selectedTopics.has(id)) selectedTopics.delete(id); else selectedTopics.add(id);
+  document.getElementById('chip-'+id).classList.toggle('active');
+  updateCountNote();
+}
+function updateCountNote(){
+  const n = allQuestions.filter(q=>selectedTopics.has(q.topic)).length;
+  document.getElementById('countNote').textContent = n>0 ? `Sẽ luyện tập ${n} từ vựng` : 'Hãy chọn ít nhất một chủ đề';
+  document.getElementById('startBtn').disabled = n===0;
+}
+
+/* ---------------- Trail ---------------- */
+function buildTrail(){
+  const t = document.getElementById('trail');
+  t.innerHTML='';
+  questions.forEach((q,i)=>{
+    const d = document.createElement('div');
+    d.className='stamp';
+    d.id = 'stamp'+i;
+    d.style.borderColor = TOPICS[q.topic].color+'88';
+    t.appendChild(d);
+  });
+}
+function updateTrail(){
+  questions.forEach((q,i)=>{
+    const el = document.getElementById('stamp'+i);
+    el.classList.remove('current');
+    if(results[i]==='correct'){el.classList.add('correct');el.textContent='✓';}
+    else if(results[i]==='wrong'){el.classList.add('wrong');el.textContent='✕';}
+  });
+  if(current<questions.length) document.getElementById('stamp'+current).classList.add('current');
+}
+
+/* ---------------- Quiz flow ---------------- */
+function shuffle(arr){ const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+
+function startQuiz(){
+  questions = shuffle(allQuestions.filter(q=>selectedTopics.has(q.topic)));
+  order = questions.map(q => shuffle(q.opts));
+  document.getElementById('topicScreen').classList.add('hidden');
+  document.getElementById('quizArea').classList.remove('hidden');
+  buildTrail();
+  renderQuestion();
+  updateTrail();
+}
+
+function renderQuestion(){
+  const q = questions[current];
+  const t = TOPICS[q.topic];
+  document.getElementById('qCounter').textContent = `Câu ${current+1}/${questions.length}`;
+  document.getElementById('scorePill').textContent = `Điểm: ${score}`;
+  document.getElementById('streakBox').textContent = streak>=2 ? `🔥 ${streak}` : '';
+  const badge = document.getElementById('topicBadge');
+  badge.style.background = t.color+'22'; badge.style.color = t.color;
+  badge.innerHTML = `${t.emoji} ${t.label}`;
+  document.getElementById('sentenceText').innerHTML = q.s.replace('___','<span class="blank">＿＿＿</span>');
+  const wrap = document.getElementById('optionsWrap');
+  wrap.innerHTML='';
+  order[current].forEach(opt=>{
+    const btn = document.createElement('button');
+    btn.className='opt';
+    btn.textContent = opt;
+    btn.onclick = ()=>selectOption(btn, opt);
+    wrap.appendChild(btn);
+  });
+  const fb = document.getElementById('feedbackBox');
+  fb.className='feedback'; fb.innerHTML='';
+  document.getElementById('nextBtn').classList.remove('show');
+  updateTrail();
+}
+
+function selectOption(btn, opt){
+  const q = questions[current];
+  if(document.getElementById('feedbackBox').classList.contains('show')) return;
+  const isCorrect = opt === q.correct;
+  document.querySelectorAll('#optionsWrap .opt').forEach(b=>{
+    b.disabled = true;
+    if(b.textContent === q.correct) b.classList.add('correct');
+    if(b === btn && !isCorrect) b.classList.add('wrong');
+    if(b!==btn && b.textContent!==q.correct) b.classList.add('dim');
+  });
+  const fb = document.getElementById('feedbackBox');
+  fb.classList.add('show');
+  if(isCorrect){
+    score++; streak++;
+    results[current]='correct';
+    fb.classList.add('correct');
+    fb.innerHTML = `<b>Chính xác!</b> "${q.correct}" = <i>${q.vi}</i>. ${q.note}`;
+    playCorrect();
+    floatWords(document.getElementById('quizScreen'));
+  } else {
+    streak = 0;
+    results[current]='wrong';
+    fb.classList.add('wrong');
+    fb.innerHTML = `<b>Chưa đúng.</b> Đáp án đúng là "<b>${q.correct}</b>" = <i>${q.vi}</i>. ${q.note}`;
+    playWrong();
+    document.getElementById('quizScreen').classList.add('shake');
+    setTimeout(()=>document.getElementById('quizScreen').classList.remove('shake'),400);
+  }
+  document.getElementById('scorePill').textContent = `Điểm: ${score}`;
+  document.getElementById('streakBox').textContent = streak>=2 ? `🔥 ${streak}` : '';
+  updateTrail();
+  document.getElementById('nextBtn').classList.add('show');
+}
+
+function nextQuestion(){
+  current++;
+  if(current >= questions.length){
+    document.getElementById('quizArea').classList.add('hidden');
+    document.getElementById('mcqDoneScreen').classList.remove('hidden');
+    document.getElementById('mcqFinalScore').textContent = score;
+    document.getElementById('mcqFinalTotal').textContent = questions.length;
+  } else {
+    renderQuestion();
+  }
+}
+
+/* ---------------- Open-ended ---------------- */
+function startOpenEnded(){
+  document.getElementById('mcqDoneScreen').classList.add('hidden');
+  document.getElementById('oeScreen').classList.remove('hidden');
+  const c = document.getElementById('oeContainer');
+  c.innerHTML='';
+  openEnded.forEach((item,i)=>{
+    const block = document.createElement('div');
+    block.className='oe-block';
+    block.innerHTML = `
+      <div class="oe-q">${i+1}. ${item.q}</div>
+      <textarea id="oeInput${i}" placeholder="Viết câu trả lời của bạn ở đây..."></textarea>
+      <div class="feedback" id="oeFeedback${i}"></div>
+      <div class="match-bar hidden" id="oeBar${i}"><div class="match-fill" id="oeFill${i}"></div></div>
+      <div class="grading-note" id="oeNote${i}">Đang chấm điểm...</div>
+    `;
+    c.appendChild(block);
+  });
+}
+
+async function gradeAnswer(question, reference, userAnswer){
+  const systemPrompt = `You are a strict but fair language-learning grader. Compare the user's answer to the reference answer for semantic similarity in meaning (not exact wording). Respond with ONLY a raw JSON object, no markdown, no code fences, in this exact shape:
+{"match_percentage": <integer 0-100>, "is_correct": <true if match_percentage >= 70, else false>, "feedback_vi": "<2-3 câu nhận xét bằng tiếng Việt, chỉ ra điều đã làm tốt và điều cần cải thiện>"}`;
+  const userMsg = `Question: ${question}\n\nReference answer: ${reference}\n\nUser's answer: ${userAnswer || '(để trống)'}`;
+  try{
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({
+        model:"claude-sonnet-4-6",
+        max_tokens:1000,
+        system: systemPrompt,
+        messages:[{role:"user", content:userMsg}]
+      })
+    });
+    const data = await response.json();
+    const textBlock = (data.content||[]).find(b=>b.type==='text');
+    let raw = textBlock ? textBlock.text : '{}';
+    raw = raw.replace(/```json|```/g,'').trim();
+    return JSON.parse(raw);
+  } catch(e){
+    return {match_percentage:null, is_correct:null, feedback_vi:"Không thể chấm điểm tự động lúc này. Hãy tự so sánh câu trả lời của bạn với đáp án tham khảo bên dưới."};
+  }
+}
+
+async function submitAllOpenEnded(){
+  const btn = document.getElementById('oeSubmitAll');
+  btn.disabled = true;
+  btn.textContent = 'Đang chấm điểm...';
+  const gradedResults = [];
+  for(let i=0;i<openEnded.length;i++){
+    document.getElementById('oeNote'+i).classList.add('show');
+    const userAnswer = document.getElementById('oeInput'+i).value.trim();
+    document.getElementById('oeInput'+i).disabled = true;
+    const g = await gradeAnswer(openEnded[i].q, openEnded[i].ref, userAnswer);
+    gradedResults.push(g);
+    const fb = document.getElementById('oeFeedback'+i);
+    fb.classList.add('show');
+    const bar = document.getElementById('oeBar'+i);
+    const fill = document.getElementById('oeFill'+i);
+    if(g.match_percentage!==null && g.match_percentage!==undefined){
+      bar.classList.remove('hidden');
+      setTimeout(()=>{fill.style.width = g.match_percentage+'%';},50);
+      fb.classList.add(g.is_correct ? 'correct':'wrong');
+      fb.innerHTML = `<b>Độ khớp: ${g.match_percentage}%</b> — ${g.feedback_vi}<br><br><b>Đáp án tham khảo:</b> ${openEnded[i].ref}`;
+      if(g.is_correct) playCorrect(); else playWrong();
+    } else {
+      fb.innerHTML = `${g.feedback_vi}<br><br><b>Đáp án tham khảo:</b> ${openEnded[i].ref}`;
+    }
+    document.getElementById('oeNote'+i).classList.remove('show');
+  }
+  btn.textContent = 'Xem kết quả tổng kết';
+  btn.disabled = false;
+  btn.onclick = ()=>showFinal(gradedResults);
+}
+
+function showFinal(gradedResults){
+  document.getElementById('oeScreen').classList.add('hidden');
+  document.getElementById('finalScreen').classList.remove('hidden');
+  const valid = gradedResults.filter(g=>typeof g.match_percentage==='number');
+  const avg = valid.length ? Math.round(valid.reduce((a,g)=>a+g.match_percentage,0)/valid.length) : null;
+  document.getElementById('finalSummary').innerHTML = `
+    Trắc nghiệm: <b>${score}/${questions.length}</b> câu đúng<br>
+    Tự luận: ${avg!==null ? `độ khớp trung bình <b>${avg}%</b>` : 'đã hoàn thành (chấm thủ công)'}
+  `;
+  // per-topic breakdown
+  const byTopic = {};
+  questions.forEach((q,i)=>{
+    if(!byTopic[q.topic]) byTopic[q.topic] = {correct:0,total:0};
+    byTopic[q.topic].total++;
+    if(results[i]==='correct') byTopic[q.topic].correct++;
+  });
+  const bd = document.getElementById('topicBreakdown');
+  bd.innerHTML = '<div style="font-family:var(--font-mono);font-size:12px;color:#7A7259;margin-bottom:8px;">Theo chủ đề:</div>';
+  Object.entries(byTopic).forEach(([id,v])=>{
+    const pct = Math.round((v.correct/v.total)*100);
+    const row = document.createElement('div');
+    row.className='tb-row';
+    row.innerHTML = `<div class="tb-label">${TOPICS[id].emoji} ${TOPICS[id].label}</div><div class="tb-track"><div class="tb-fill" style="width:${pct}%;background:${TOPICS[id].color};"></div></div><div class="tb-pct">${v.correct}/${v.total}</div>`;
+    bd.appendChild(row);
+  });
+}
+
+/* init */
+buildChips();
+</script>
+</body>
+</html>
