@@ -176,6 +176,50 @@
   }
 
 
+  /* ---------- mobile scroll-to-color for hero and experience photos ---------- */
+  (function () {
+    var mobile = window.matchMedia('(max-width: 767px)');
+    var items = $('.hero-card, .experience .par-wrap');
+    if (!items.length) return;
+
+    var pending = false;
+    function update() {
+      pending = false;
+      var height = window.innerHeight || document.documentElement.clientHeight;
+      items.forEach(function (item) {
+        if (!mobile.matches) {
+          item.classList.remove('is-color');
+          return;
+        }
+        var rect = item.getBoundingClientRect();
+        var visibleHeight = Math.max(0,
+          Math.min(rect.bottom, height * .88) - Math.max(rect.top, height * .12));
+        var threshold = Math.min(120, Math.max(35, rect.height * .15));
+        item.classList.toggle('is-color', visibleHeight > threshold);
+      });
+    }
+    function schedule() {
+      if (pending) return;
+      pending = true;
+      window.requestAnimationFrame(update);
+    }
+
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    window.addEventListener('orientationchange', schedule);
+    window.addEventListener('pageshow', schedule);
+    items.forEach(function (item) {
+      var img = item.querySelector('img');
+      if (img && !img.complete) img.addEventListener('load', schedule, { once: true });
+    });
+
+    /* Delay a frame so the initial grayscale can visibly fade to natural color. */
+    window.requestAnimationFrame(function () {
+      window.setTimeout(schedule, 80);
+    });
+    window.setTimeout(schedule, 350);
+  })();
+
   /* ---------- swipe-to-color photography (Playground) ---------- */
   (function () {
     var gallery = document.getElementById('collage');
