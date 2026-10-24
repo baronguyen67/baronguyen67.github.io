@@ -770,3 +770,15 @@ button.cred-card{cursor:pointer}
 }
 @media (max-width:390px){.xp-vis--collage{min-height:330px}}
 @media (prefers-reduced-motion:reduce){.xp-vis--collage .ph{transition:none!important}}
+
+/* V7.1: explicit mobile photo selectors remain tappable even if images overlap */
+.collage-controls{display:none}
+@media (max-width:767px){
+  .xp-vis--collage{margin-bottom:28px;min-height:390px}
+  .xp-vis--collage .ph{clip-path:none!important}
+  .xp-vis--collage .collage-hint{display:none}
+  .xp-vis--collage .collage-controls{position:absolute;bottom:0;left:0;right:0;z-index:12;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .xp-vis--collage .collage-controls label{display:flex;justify-content:center;align-items:center;min-height:44px;padding:10px 7px;border:1.5px solid #111;border-radius:999px;font-size:11px;line-height:1.2;text-align:center;font-weight:700;background:var(--paper);color:#111;cursor:pointer;touch-action:manipulation}
+  #interpreter-photo-a:checked ~ .collage-controls label[for="interpreter-photo-a"],
+  #interpreter-photo-b:checked ~ .collage-controls label[for="interpreter-photo-b"]{background:#111;color:#fff}
+}
