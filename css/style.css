@@ -927,3 +927,36 @@ button.cred-card{cursor:pointer}
 @media (prefers-reduced-motion:reduce) and (max-width:767px){
   .hero-card .hero-img,.experience .par-wrap img{transition:none!important}
 }
+
+/* V13 — robust mobile photo colors and gallery interaction */
+@media (max-width:767px){
+  /*
+   * Progressive enhancement: the portrait is full-color whenever on screen,
+   * even before JavaScript runs. Grayscale applies only after scrolling away.
+   * This prevents an old/blocked script from leaving the hero permanently gray.
+   */
+  .hero-card .hero-img,
+  .hero-card:hover .hero-img,
+  .hero-card.is-color .hero-img,
+  .hero-card.is-color:hover .hero-img{
+    filter:grayscale(0) saturate(1.15) contrast(1.035) brightness(1.025);
+    transition:filter .9s cubic-bezier(.22,.8,.2,1),transform 1.2s var(--ease);
+  }
+  .hero-card.is-out-of-view .hero-img,
+  .hero-card.is-out-of-view:hover .hero-img{
+    filter:grayscale(1) contrast(1.06) brightness(.94);
+  }
+  /* Keep text legible while letting the original color show through. */
+  .hero-shade{
+    background:
+      linear-gradient(0deg,rgba(10,10,10,.88) 0%,rgba(10,10,10,.5) 30%,rgba(10,10,10,.04) 69%),
+      linear-gradient(180deg,rgba(10,10,10,.25),transparent 27%);
+  }
+  .experience .par-wrap.is-color img,
+  .experience .par-wrap.is-color:hover img{
+    filter:grayscale(0) contrast(1) saturate(1.12);
+  }
+  #playground .collage .cp.is-color img{
+    filter:grayscale(0) contrast(1) saturate(1.12);
+  }
+}
