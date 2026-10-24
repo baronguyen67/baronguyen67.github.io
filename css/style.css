@@ -609,3 +609,31 @@ button.cred-card{cursor:pointer}
   .hero-title .ln{width:100%;max-width:100%}
   .hero-title .hero-alias{align-self:flex-start;margin-left:0}
 }
+
+/* V5 polish: prevent certificate text clipping and preserve school logo proportions */
+.cred-card--accent{min-width:0}
+.cred-card--accent .cred-card-v{max-width:100%;font-size:clamp(25px,2.35vw,37px);letter-spacing:-.05em;overflow-wrap:normal;word-break:normal}
+.logo-box{background:#fff;padding:10px;overflow:hidden}
+.logo,.logo--ntut,.logo--pu,.logo--eva{width:100%;height:100%;max-width:100%;object-fit:contain!important;border-radius:8px}
+.play .mega{font-size:clamp(48px,9.8vw,166px);line-height:1.02}
+.play .mega .ln{overflow:visible;padding-bottom:.16em;margin-bottom:0}
+.play .mega .ln-i{overflow:visible}
+.play .mega .serif{line-height:1.08}
+.play .chat{max-width:100%;min-width:0}
+.play .bubble{max-width:100%;overflow-wrap:anywhere}
+@media(max-width:900px){
+ .play .mega{font-size:clamp(44px,12vw,100px);line-height:1.04}
+ .play .chat{flex-basis:80%;padding:8px}
+ .play .bubble{font-size:13px;line-height:1.35}
+}
+@media(max-width:767px){
+ .cred-card--accent .cred-card-v{font-size:clamp(24px,6.3vw,34px);line-height:1.02}
+ .logo-box{padding:7px}
+ .play .mega{font-size:clamp(38px,10vw,65px);line-height:1.06}
+ .play .mega .ln{padding-bottom:.12em;margin-bottom:0}
+ .play .chat{flex-basis:82%;min-width:0}
+}
+@media(max-width:390px){
+ .cred-card--accent .cred-card-v{font-size:clamp(23px,6vw,29px)}
+ .play .mega{font-size:clamp(36px,9.6vw,43px)}
+}
