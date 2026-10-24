@@ -188,14 +188,18 @@
       var height = window.innerHeight || document.documentElement.clientHeight;
       items.forEach(function (item) {
         if (!mobile.matches) {
-          item.classList.remove('is-color');
+          item.classList.remove('is-color', 'is-out-of-view');
           return;
         }
         var rect = item.getBoundingClientRect();
         var visibleHeight = Math.max(0,
           Math.min(rect.bottom, height * .88) - Math.max(rect.top, height * .12));
         var threshold = Math.min(120, Math.max(35, rect.height * .15));
-        item.classList.toggle('is-color', visibleHeight > threshold);
+        var active = visibleHeight > threshold;
+        item.classList.toggle('is-color', active);
+        if (item.classList.contains('hero-card')) {
+          item.classList.toggle('is-out-of-view', !active);
+        }
       });
     }
     function schedule() {
@@ -362,8 +366,9 @@
   /* ---------- certificate modal ---------- */
   var modal = $('#certModal'), mImg = $('#certImg'), mCap = $('#certCap');
   var lastBtn = null;
-  $$('.cred-btn').forEach(function (b) {
+  $('.cred-card[data-img]').forEach(function (b) {
     b.addEventListener('click', function () {
+      if (!modal || !mImg || !mCap) return;
       lastBtn = b;
       mImg.src = b.dataset.img;
       mImg.alt = b.dataset.cap + ' certificate';
