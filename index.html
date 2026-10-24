@@ -20,7 +20,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap">
-<link rel="stylesheet" href="css/style.css?v=20261024-photo-stack-v7">
+<link rel="stylesheet" href="css/style.css?v=20261024-photo-stack-v8">
 <link rel="preload" as="image" href="images/hero.jpg" fetchpriority="high">
 <script>document.documentElement.classList.add('js');</script>
 
@@ -319,7 +319,10 @@
           <label for="interpreter-photo-b" class="photo-switch" aria-label="Bring career orientation photo forward"></label>
           <figcaption>Trilingual Interpreter · Career Orientation Event</figcaption>
         </figure>
-        <span class="collage-hint" aria-hidden="true">TAP A PHOTO TO BRING IT FORWARD ↗</span>
+        <div class="collage-controls" role="group" aria-label="Choose which interpreter photo is in front">
+          <label for="interpreter-photo-a">01 · Ministry program</label>
+          <label for="interpreter-photo-b">02 · Career event</label>
+        </div>
       </div>
     </article>
 
@@ -531,6 +534,6 @@
   <p id="certCap"></p>
 </dialog>
 
-<script src="js/main.js?v=20261024-photo-stack-v7" defer></script>
+<script src="js/main.js?v=20261024-photo-stack-v8" defer></script>
 </body>
 </html>
