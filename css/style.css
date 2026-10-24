@@ -597,3 +597,7 @@ button.cred-card{cursor:pointer}
   .hero-card{padding-bottom:clamp(24px,8vw,40px)}
   .hero-title{margin-bottom:0}
 }
+
+/* Hide redundant hero summary on desktop and mobile */
+.hero-card-ui{display:none!important}
+.hero-bottom{grid-template-columns:minmax(0,1fr)}
