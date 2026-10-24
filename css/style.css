@@ -601,3 +601,11 @@ button.cred-card{cursor:pointer}
 /* Hide redundant hero summary on desktop and mobile */
 .hero-card-ui{display:none!important}
 .hero-bottom{grid-template-columns:minmax(0,1fr)}
+
+/* Mobile hero alignment fix: stretch the flex child instead of right-aligning it */
+@media (max-width:767px){
+  .hero-bottom{align-self:stretch;width:100%;min-width:0;box-sizing:border-box}
+  .hero-title{width:100%;max-width:100%;align-items:flex-start;text-align:left}
+  .hero-title .ln{width:100%;max-width:100%}
+  .hero-title .hero-alias{align-self:flex-start;margin-left:0}
+}
