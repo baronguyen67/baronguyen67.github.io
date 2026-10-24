@@ -179,7 +179,7 @@
   /* ---------- mobile scroll-to-color for hero and experience photos ---------- */
   (function () {
     var mobile = window.matchMedia('(max-width: 767px)');
-    var items = $('.hero-card, .experience .par-wrap');
+    var items = $$('.hero-card, .experience .par-wrap');
     if (!items.length) return;
 
     var pending = false;
@@ -366,7 +366,7 @@
   /* ---------- certificate modal ---------- */
   var modal = $('#certModal'), mImg = $('#certImg'), mCap = $('#certCap');
   var lastBtn = null;
-  $('.cred-card[data-img]').forEach(function (b) {
+  $$('.cred-card[data-img]').forEach(function (b) {
     b.addEventListener('click', function () {
       if (!modal || !mImg || !mCap) return;
       lastBtn = b;
