@@ -176,15 +176,14 @@
   }
 
 
-  /* ---------- scroll-to-color photography (Playground) ---------- */
+  /* ---------- swipe-to-color photography (Playground) ---------- */
   (function () {
     var gallery = document.getElementById('collage');
     if (!gallery) return;
     var photos = $$('.cp', gallery);
     if (!photos.length) return;
 
-    var verticalMobile = window.matchMedia('(max-width: 767px)');
-    var horizontalTablet = window.matchMedia('(max-width: 900px)');
+    var carouselMode = window.matchMedia('(max-width: 900px)');
     var scheduled = false;
 
     function updateColor() {
@@ -192,72 +191,71 @@
       var viewportH = window.innerHeight || document.documentElement.clientHeight;
       var viewportW = window.innerWidth || document.documentElement.clientWidth;
       var galleryRect = gallery.getBoundingClientRect();
-      var centerY = viewportH * 0.49;
-      var choice = null;
-      var nearestDistance = Infinity;
 
-      if (verticalMobile.matches) {
-        /* The mobile gallery follows normal vertical page scrolling.
-           The photo closest to the middle of the screen is in full color. */
-        photos.forEach(function (photo) {
-          var rect = photo.getBoundingClientRect();
-          var visibleHeight = Math.max(0, Math.min(rect.bottom, viewportH) - Math.max(rect.top, 0));
-          if (visibleHeight < Math.min(70, rect.height * .16)) return;
-          var distance = Math.abs((rect.top + rect.bottom) / 2 - centerY);
-          if (distance < nearestDistance) {
-            nearestDistance = distance;
-            choice = photo;
-          }
-        });
-        photos.forEach(function (photo) {
-          photo.classList.toggle('is-color', photo === choice);
-        });
-      } else if (horizontalTablet.matches) {
-        /* Tablets retain the horizontal swipe gallery. */
-        var midpoint = galleryRect.left + galleryRect.width / 2;
-        var onScreen = galleryRect.bottom > 0 && galleryRect.top < viewportH;
-        if (onScreen) {
+      if (carouselMode.matches) {
+        /* Phones and tablets: the image closest to the horizontal
+           center of the gallery receives full color during a swipe. */
+        var visibleHeight = Math.max(0,
+          Math.min(galleryRect.bottom, viewportH) - Math.max(galleryRect.top, 0));
+        var centerX = galleryRect.left + galleryRect.width / 2;
+        var nearest = null;
+        var distanceMin = Infinity;
+
+        if (visibleHeight > Math.min(60, galleryRect.height * .13)) {
           photos.forEach(function (photo) {
             var rect = photo.getBoundingClientRect();
-            var visibleWidth = Math.max(0, Math.min(rect.right, galleryRect.right) - Math.max(rect.left, galleryRect.left));
-            if (visibleWidth < 12) return;
-            var distance = Math.abs((rect.left + rect.right) / 2 - midpoint);
-            if (distance < nearestDistance) {
-              nearestDistance = distance;
-              choice = photo;
+            var exposed = Math.max(0,
+              Math.min(rect.right, galleryRect.right) - Math.max(rect.left, galleryRect.left));
+            if (exposed < 16) return;
+            var distance = Math.abs((rect.left + rect.right) / 2 - centerX);
+            if (distance < distanceMin) {
+              distanceMin = distance;
+              nearest = photo;
             }
           });
         }
         photos.forEach(function (photo) {
-          photo.classList.toggle('is-color', photo === choice);
+          photo.classList.toggle('is-color', photo === nearest);
         });
       } else {
-        /* Desktop collage: color each photograph as it enters the viewport. */
+        /* Desktop: multiple collage photographs gain color when visible. */
         photos.forEach(function (photo) {
           var rect = photo.getBoundingClientRect();
-          var visibleHeight = Math.max(0, Math.min(rect.bottom, viewportH) - Math.max(rect.top, 0));
-          var visibleWidth = Math.max(0, Math.min(rect.right, viewportW) - Math.max(rect.left, 0));
-          photo.classList.toggle('is-color', visibleWidth > 12 && visibleHeight > Math.min(120, rect.height * .3));
+          var visibleHeight = Math.max(0,
+            Math.min(rect.bottom, viewportH) - Math.max(rect.top, 0));
+          var visibleWidth = Math.max(0,
+            Math.min(rect.right, viewportW) - Math.max(rect.left, 0));
+          photo.classList.toggle('is-color',
+            visibleWidth > 16 && visibleHeight > Math.min(120, rect.height * .3));
         });
       }
     }
 
-    function queueColorUpdate() {
+    function scheduleColorUpdate() {
       if (scheduled) return;
       scheduled = true;
       window.requestAnimationFrame(updateColor);
     }
 
-    gallery.addEventListener('scroll', queueColorUpdate, { passive: true });
-    window.addEventListener('scroll', queueColorUpdate, { passive: true });
-    window.addEventListener('resize', queueColorUpdate);
-    window.addEventListener('pageshow', queueColorUpdate);
+    gallery.addEventListener('scroll', scheduleColorUpdate, { passive: true });
+    window.addEventListener('scroll', scheduleColorUpdate, { passive: true });
+    window.addEventListener('resize', scheduleColorUpdate);
+    window.addEventListener('orientationchange', scheduleColorUpdate);
+    window.addEventListener('pageshow', scheduleColorUpdate);
+    gallery.addEventListener('touchend', function () {
+      window.setTimeout(scheduleColorUpdate, 120);
+      window.setTimeout(scheduleColorUpdate, 350);
+    }, { passive: true });
+
     photos.forEach(function (photo) {
       var img = photo.querySelector('img');
-      if (img && !img.complete) img.addEventListener('load', queueColorUpdate, { once: true });
+      if (img && !img.complete) {
+        img.addEventListener('load', scheduleColorUpdate, { once: true });
+      }
     });
-    queueColorUpdate();
-    window.setTimeout(queueColorUpdate, 280);
+
+    scheduleColorUpdate();
+    window.setTimeout(scheduleColorUpdate, 250);
   })();
 
   /* ---------- magnetic buttons ---------- */
