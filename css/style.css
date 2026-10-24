@@ -782,3 +782,25 @@ button.cred-card{cursor:pointer}
   #interpreter-photo-a:checked ~ .collage-controls label[for="interpreter-photo-a"],
   #interpreter-photo-b:checked ~ .collage-controls label[for="interpreter-photo-b"]{background:#111;color:#fff}
 }
+
+/* V9 · Scroll-reactive color reveal in Beyond the Resume */
+.play .collage .cp img{
+  filter:grayscale(1) contrast(1.035);
+  transition:filter .7s cubic-bezier(.22,.8,.2,1);
+}
+.play .collage .cp.is-color img{
+  filter:grayscale(0) contrast(1) saturate(1.06);
+}
+@media (hover:hover) and (pointer:fine){
+  .play .collage .cp:hover img{
+    filter:grayscale(0) contrast(1) saturate(1.06);
+  }
+}
+@media (max-width:900px){
+  /* Keep the active, centered photo in full color while swiping the gallery. */
+  .play .collage .cp img{filter:grayscale(1) contrast(1.035)}
+  .play .collage .cp.is-color img{filter:grayscale(0) contrast(1) saturate(1.06)}
+}
+@media (prefers-reduced-motion:reduce){
+  .play .collage .cp img{transition:none!important}
+}
