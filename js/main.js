@@ -236,6 +236,10 @@
 
     function updateColor() {
       scheduled = false;
+      if (gallery.classList.contains('turntable-ready')) {
+        photos.forEach(function (photo) { photo.classList.remove('is-color'); });
+        return;
+      }
       var viewportH = window.innerHeight || document.documentElement.clientHeight;
       var viewportW = window.innerWidth || document.documentElement.clientWidth;
       var galleryRect = gallery.getBoundingClientRect();
@@ -306,7 +310,7 @@
     window.setTimeout(scheduleColorUpdate, 250);
   })();
 
-  /* ---------- desktop circular photo turntable ---------- */
+  /* ---------- responsive 3D photo turntable (desktop + mobile) ---------- */
   (function () {
     var stage = $('#collage');
     var toolbar = $('.turntable-toolbar');
@@ -321,13 +325,14 @@
     var total = cards.length;
     if (total !== 6) return;
 
-    var desktop = window.matchMedia('(min-width: 901px)');
+    var compact = window.matchMedia('(max-width: 900px)');
     var motion = window.matchMedia('(prefers-reduced-motion: reduce)');
     var currentStep = 0;
     var shownStep = 0;
     var frame = null;
     var running = false;
     var lastActive = -1;
+    var swipeLockUntil = 0;
 
     function wrap(num) { return ((num % total) + total) % total; }
     function photoLabel(card) {
@@ -345,7 +350,7 @@
       button.tabIndex = -1;
       card.appendChild(button);
       button.addEventListener('click', function () {
-        if (!desktop.matches) return;
+        if (Date.now() < swipeLockUntil) return;
         var pos = wrap(currentStep);
         var distance = wrap(index - pos);
         if (distance > total / 2) distance -= total;
@@ -365,7 +370,7 @@
            can still reach photos that are concealed at the back. */
         var diff = wrap(i - active);
         var adjacent = diff === 1 || diff === total - 1;
-        selectors[i].tabIndex = desktop.matches && (chosen || adjacent) ? 0 : -1;
+        selectors[i].tabIndex = chosen || adjacent ? 0 : -1;
       });
       dots.forEach(function (dot, i) {
         dot.setAttribute('aria-pressed', i === active ? 'true' : 'false');
@@ -373,10 +378,15 @@
     }
 
     function layout(position) {
-      if (!desktop.matches) return;
       var width = stage.clientWidth;
-      var radiusX = Math.min(470, Math.max(310, width * 0.34));
-      var radiusZ = Math.min(470, radiusX * 1.12);
+      var small = compact.matches;
+      var radiusX = small ? Math.max(96, Math.min(155, width * .34))
+                          : Math.min(470, Math.max(310, width * .34));
+      var radiusZ = small ? Math.max(110, Math.min(195, width * .38))
+                          : Math.min(470, radiusX * 1.12);
+      var rotateY = small ? 24 : 19;
+      var tilt = small ? 36 : 66;
+      var offsetY = small ? 20 : 24;
       var chosen = wrap(Math.round(position));
 
       cards.forEach(function (card, i) {
@@ -384,15 +394,18 @@
         var cosine = Math.cos(theta);
         var sine = Math.sin(theta);
         var x = sine * radiusX;
-        var y = 24 + (cosine - 1) * 66;
+        var y = offsetY + (cosine - 1) * tilt;
         var z = (cosine - 1) * radiusZ;
-        var turn = -sine * 19;
-        card.style.transform =
-          'translate(-50%,-50%) translate3d(' +
+        var turn = -sine * rotateY;
+        var transform = 'translate(-50%,-50%) translate3d(' +
           x.toFixed(1) + 'px,' + y.toFixed(1) + 'px,' +
           z.toFixed(1) + 'px) rotateY(' + turn.toFixed(1) + 'deg)';
+        card.style.transform = transform;
+        // Mobile has a legacy !important transform:none rule: this custom
+        // property feeds the mobile turntable's higher-priority transform.
+        card.style.setProperty('--tt-transform', transform);
         card.style.zIndex = String(Math.round(1000 + cosine * 100));
-        card.style.opacity = cosine < -0.75 ? '.65' : cosine < -0.2 ? '.80' : '1';
+        card.style.opacity = cosine < -0.75 ? '.55' : cosine < -0.2 ? '.74' : '1';
       });
       reflectActive(chosen);
     }
@@ -405,7 +418,6 @@
     }
 
     function goTo(step) {
-      if (!desktop.matches) return;
       if (frame !== null) window.cancelAnimationFrame(frame);
       var from = shownStep;
       var to = step;
@@ -454,10 +466,28 @@
     });
 
     stage.addEventListener('keydown', function (event) {
-      if (!desktop.matches || (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight')) return;
+      if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
       event.preventDefault();
       goTo(currentStep + (event.key === 'ArrowRight' ? 1 : -1));
     });
+
+    // Swipe the mobile turntable without blocking vertical page scrolling.
+    var touchStart = null;
+    stage.addEventListener('touchstart', function (event) {
+      if (!compact.matches || !event.touches || event.touches.length !== 1) return;
+      touchStart = {x:event.touches[0].clientX, y:event.touches[0].clientY};
+    }, {passive:true});
+    stage.addEventListener('touchcancel', function () { touchStart = null; }, {passive:true});
+    stage.addEventListener('touchend', function (event) {
+      if (!compact.matches || !touchStart || !event.changedTouches ||
+          !event.changedTouches.length) return;
+      var dx = event.changedTouches[0].clientX - touchStart.x;
+      var dy = event.changedTouches[0].clientY - touchStart.y;
+      touchStart = null;
+      if (Math.abs(dx) < 42 || Math.abs(dx) < Math.abs(dy) * 1.25) return;
+      swipeLockUntil = Date.now() + 550;
+      goTo(currentStep + (dx < 0 ? 1 : -1));
+    }, {passive:true});
 
     function modeChanged() {
       if (frame !== null) {
@@ -465,33 +495,25 @@
         frame = null;
       }
       running = false;
-      if (desktop.matches) {
-        stage.classList.add('turntable-ready');
-        stage.tabIndex = 0;
-        cards.forEach(function (card) { card.classList.remove('is-color'); });
-        shownStep = currentStep;
-        lastActive = -1;
-        layout(shownStep);
-        updateFinal(currentStep);
-      } else {
-        stage.classList.remove('turntable-ready');
-        stage.removeAttribute('tabindex');
-        cards.forEach(function (card) {
-          card.style.transform = '';
-          card.style.zIndex = '';
-          card.style.opacity = '';
-          card.classList.remove('tt-active');
-        });
-        selectors.forEach(function (button) { button.tabIndex = -1; });
-        lastActive = -1;
-      }
+      stage.classList.add('turntable-ready');
+      stage.tabIndex = 0;
+      cards.forEach(function (card) { card.classList.remove('is-color'); });
+      shownStep = currentStep;
+      lastActive = -1;
+      layout(shownStep);
+      updateFinal(currentStep);
     }
 
-    if (desktop.addEventListener) desktop.addEventListener('change', modeChanged);
-    else if (desktop.addListener) desktop.addListener(modeChanged);
+    if (compact.addEventListener) compact.addEventListener('change', modeChanged);
+    else if (compact.addListener) compact.addListener(modeChanged);
 
+    var resizeFrame = null;
     window.addEventListener('resize', function () {
-      if (desktop.matches) layout(shownStep);
+      if (resizeFrame !== null) window.cancelAnimationFrame(resizeFrame);
+      resizeFrame = window.requestAnimationFrame(function () {
+        resizeFrame = null;
+        layout(shownStep);
+      });
     });
 
     modeChanged();
