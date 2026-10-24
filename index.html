@@ -413,7 +413,7 @@
 
       <ol class="tl">
         <li class="tl-i rv">
-          <img class="logo" src="images/logo-ntut.png" alt="NTUT Taipei Tech logo" width="104" height="64" loading="lazy" decoding="async">
+          <div class="logo-box"><img class="logo logo--ntut" src="images/logo-ntut.png" alt="NTUT Taipei Tech logo" width="104" height="64" loading="lazy" decoding="async"></div>
           <div>
             <p class="tl-d">Sep 2026 — Present</p>
             <h3>MBA</h3>
@@ -422,7 +422,7 @@
           </div>
         </li>
         <li class="tl-i rv">
-          <img class="logo" src="images/logo-providence.png" alt="Providence University logo" width="104" height="64" loading="lazy" decoding="async">
+          <div class="logo-box"><img class="logo logo--pu" src="images/logo-providence.png" alt="Providence University logo" width="104" height="64" loading="lazy" decoding="async"></div>
           <div>
             <p class="tl-d">2022 — 2026 · Graduated</p>
             <h3>BBA · International Business Administration</h3>
@@ -431,7 +431,7 @@
           </div>
         </li>
         <li class="tl-i rv">
-          <img class="logo" src="images/logo-evacademy.png" alt="EV Academy logo" width="104" height="64" loading="lazy" decoding="async">
+          <div class="logo-box"><img class="logo logo--eva" src="images/logo-evacademy.png" alt="EV Academy logo" width="104" height="64" loading="lazy" decoding="async"></div>
           <div>
             <p class="tl-d">Summer 2023 · 6 weeks</p>
             <h3>Intensive English Program</h3>
@@ -444,20 +444,29 @@
 
     <aside class="cred rv" id="credentials" aria-labelledby="cred-h">
       <h3 id="cred-h" class="cred-h">Credentials</h3>
-      <ul class="cred-list">
-        <li><span class="cred-v">825</span><span class="cred-k">TOEIC</span></li>
-        <li><span class="cred-v">B2</span><span class="cred-k">TOCFL Mandarin</span></li>
-        <li>
-          <button class="cred-btn" type="button" data-img="images/hackerrank-sql-cert.jpg" data-cap="HackerRank · SQL Skills Certification">
-            <span class="cred-v">SQL</span><span class="cred-k">HackerRank <i>View ↗</i></span>
-          </button>
-        </li>
-        <li>
-          <button class="cred-btn" type="button" data-img="images/hubspot-inbound-sales-cert.jpg" data-cap="HubSpot Academy · Inbound Sales">
-            <span class="cred-v">Inbound<br>Sales</span><span class="cred-k">HubSpot Academy <i>View ↗</i></span>
-          </button>
-        </li>
-      </ul>
+      <p class="cred-sub">Verified language ability and business/data certifications.</p>
+      <div class="cred-grid">
+        <article class="cred-card cred-card--solid">
+          <span class="cred-card-k">TOEIC</span>
+          <strong class="cred-card-v">825</strong>
+          <span class="cred-card-note">English proficiency</span>
+        </article>
+        <article class="cred-card cred-card--outline">
+          <span class="cred-card-k">TOCFL</span>
+          <strong class="cred-card-v">B2</strong>
+          <span class="cred-card-note">Mandarin Chinese</span>
+        </article>
+        <button class="cred-card cred-card--link" type="button" data-img="images/hackerrank-sql-cert.jpg" data-cap="HackerRank · SQL Skills Certification">
+          <span class="cred-card-k">HackerRank</span>
+          <strong class="cred-card-v">SQL</strong>
+          <span class="cred-card-link">View certificate ↗</span>
+        </button>
+        <button class="cred-card cred-card--link cred-card--accent" type="button" data-img="images/hubspot-inbound-sales-cert.jpg" data-cap="HubSpot Academy · Inbound Sales">
+          <span class="cred-card-k">HubSpot Academy</span>
+          <strong class="cred-card-v">Inbound<br>Sales</strong>
+          <span class="cred-card-link">View certificate ↗</span>
+        </button>
+      </div>
     </aside>
   </div>
 </section>
