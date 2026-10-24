@@ -306,6 +306,197 @@
     window.setTimeout(scheduleColorUpdate, 250);
   })();
 
+  /* ---------- desktop circular photo turntable ---------- */
+  (function () {
+    var stage = $('#collage');
+    var toolbar = $('.turntable-toolbar');
+    var prev = $('#turntablePrev');
+    var next = $('#turntableNext');
+    var counter = $('#turntableCounter');
+    var caption = $('#turntableActiveCaption');
+    var dots = $$('.turntable-dot');
+    if (!stage || !toolbar || !prev || !next || !counter || !caption) return;
+
+    var cards = $$('.cp', stage);
+    var total = cards.length;
+    if (total !== 6) return;
+
+    var desktop = window.matchMedia('(min-width: 901px)');
+    var motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    var currentStep = 0;
+    var shownStep = 0;
+    var frame = null;
+    var running = false;
+    var lastActive = -1;
+
+    function wrap(num) { return ((num % total) + total) % total; }
+    function photoLabel(card) {
+      var name = $('figcaption', card);
+      return name ? name.textContent.replace(/\s+/g, ' ').trim() : 'Photo';
+    }
+
+    var selectors = [];
+    cards.forEach(function (card, index) {
+      var button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'tt-photo-action';
+      button.setAttribute('aria-label', 'Show photo ' + (index + 1) + ': ' + photoLabel(card));
+      button.setAttribute('aria-pressed', index === 0 ? 'true' : 'false');
+      button.tabIndex = -1;
+      card.appendChild(button);
+      button.addEventListener('click', function () {
+        if (!desktop.matches) return;
+        var pos = wrap(currentStep);
+        var distance = wrap(index - pos);
+        if (distance > total / 2) distance -= total;
+        goTo(currentStep + distance);
+      });
+      selectors.push(button);
+    });
+
+    function reflectActive(active) {
+      if (active === lastActive && running) return;
+      lastActive = active;
+      cards.forEach(function (card, i) {
+        var chosen = i === active;
+        card.classList.toggle('tt-active', chosen);
+        selectors[i].setAttribute('aria-pressed', chosen ? 'true' : 'false');
+        /* The two visible neighbors are directly selectable; the dots
+           can still reach photos that are concealed at the back. */
+        var diff = wrap(i - active);
+        var adjacent = diff === 1 || diff === total - 1;
+        selectors[i].tabIndex = desktop.matches && (chosen || adjacent) ? 0 : -1;
+      });
+      dots.forEach(function (dot, i) {
+        dot.setAttribute('aria-pressed', i === active ? 'true' : 'false');
+      });
+    }
+
+    function layout(position) {
+      if (!desktop.matches) return;
+      var width = stage.clientWidth;
+      var radiusX = Math.min(470, Math.max(310, width * 0.34));
+      var radiusZ = Math.min(470, radiusX * 1.12);
+      var chosen = wrap(Math.round(position));
+
+      cards.forEach(function (card, i) {
+        var theta = (i - position) * Math.PI * 2 / total;
+        var cosine = Math.cos(theta);
+        var sine = Math.sin(theta);
+        var x = sine * radiusX;
+        var y = 24 + (cosine - 1) * 66;
+        var z = (cosine - 1) * radiusZ;
+        var turn = -sine * 19;
+        card.style.transform =
+          'translate(-50%,-50%) translate3d(' +
+          x.toFixed(1) + 'px,' + y.toFixed(1) + 'px,' +
+          z.toFixed(1) + 'px) rotateY(' + turn.toFixed(1) + 'deg)';
+        card.style.zIndex = String(Math.round(1000 + cosine * 100));
+        card.style.opacity = cosine < -0.75 ? '.65' : cosine < -0.2 ? '.80' : '1';
+      });
+      reflectActive(chosen);
+    }
+
+    function updateFinal(step) {
+      var active = wrap(step);
+      counter.innerHTML = String(active + 1).padStart(2, '0') + ' <span>/ 06</span>';
+      caption.textContent = photoLabel(cards[active]);
+      reflectActive(active);
+    }
+
+    function goTo(step) {
+      if (!desktop.matches) return;
+      if (frame !== null) window.cancelAnimationFrame(frame);
+      var from = shownStep;
+      var to = step;
+      currentStep = step;
+
+      if (motion.matches || Math.abs(to - from) < 0.0001) {
+        shownStep = to;
+        running = false;
+        layout(shownStep);
+        updateFinal(to);
+        return;
+      }
+
+      var started = null;
+      var duration = 820;
+      running = true;
+      function animate(now) {
+        if (started === null) started = now;
+        var progress = Math.min(1, (now - started) / duration);
+        var eased = progress < .5 ? 4 * progress * progress * progress
+          : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+        shownStep = from + (to - from) * eased;
+        layout(shownStep);
+
+        if (progress < 1) {
+          frame = window.requestAnimationFrame(animate);
+        } else {
+          frame = null;
+          running = false;
+          shownStep = to;
+          layout(shownStep);
+          updateFinal(to);
+        }
+      }
+      frame = window.requestAnimationFrame(animate);
+    }
+
+    prev.addEventListener('click', function () { goTo(currentStep - 1); });
+    next.addEventListener('click', function () { goTo(currentStep + 1); });
+    dots.forEach(function (dot, index) {
+      dot.addEventListener('click', function () {
+        var diff = wrap(index - wrap(currentStep));
+        if (diff > total / 2) diff -= total;
+        goTo(currentStep + diff);
+      });
+    });
+
+    stage.addEventListener('keydown', function (event) {
+      if (!desktop.matches || (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight')) return;
+      event.preventDefault();
+      goTo(currentStep + (event.key === 'ArrowRight' ? 1 : -1));
+    });
+
+    function modeChanged() {
+      if (frame !== null) {
+        window.cancelAnimationFrame(frame);
+        frame = null;
+      }
+      running = false;
+      if (desktop.matches) {
+        stage.classList.add('turntable-ready');
+        stage.tabIndex = 0;
+        cards.forEach(function (card) { card.classList.remove('is-color'); });
+        shownStep = currentStep;
+        lastActive = -1;
+        layout(shownStep);
+        updateFinal(currentStep);
+      } else {
+        stage.classList.remove('turntable-ready');
+        stage.removeAttribute('tabindex');
+        cards.forEach(function (card) {
+          card.style.transform = '';
+          card.style.zIndex = '';
+          card.style.opacity = '';
+          card.classList.remove('tt-active');
+        });
+        selectors.forEach(function (button) { button.tabIndex = -1; });
+        lastActive = -1;
+      }
+    }
+
+    if (desktop.addEventListener) desktop.addEventListener('change', modeChanged);
+    else if (desktop.addListener) desktop.addListener(modeChanged);
+
+    window.addEventListener('resize', function () {
+      if (desktop.matches) layout(shownStep);
+    });
+
+    modeChanged();
+  })();
+
   /* ---------- magnetic buttons ---------- */
   if (finePointer && !reduce) {
     $$('.mag').forEach(function (el) {
