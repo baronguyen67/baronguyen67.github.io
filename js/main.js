@@ -230,6 +230,26 @@
     }
   }
 
+  /* ---------- interactive photo stack (mobile) ---------- */
+  var photoStack = $('.xp-vis--collage');
+  if (photoStack) {
+    var photoFigures = $('.ph', photoStack);
+    var photoButtons = $('.photo-switch', photoStack);
+    function bringPhotoForward(chosen) {
+      photoFigures.forEach(function (figure) {
+        var active = figure === chosen;
+        figure.classList.toggle('is-front', active);
+        var button = $('.photo-switch', figure);
+        if (button) button.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+    }
+    photoButtons.forEach(function (button) {
+      button.addEventListener('click', function () {
+        bringPhotoForward(button.closest('.ph'));
+      });
+    });
+  }
+
   /* ---------- certificate modal ---------- */
   var modal = $('#certModal'), mImg = $('#certImg'), mCap = $('#certCap');
   var lastBtn = null;
