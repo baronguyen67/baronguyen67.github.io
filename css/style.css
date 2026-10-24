@@ -589,3 +589,11 @@ button.cred-card{cursor:pointer}
 @media (prefers-reduced-motion:reduce) and (max-width:767px){
   .hero-img{transform:none}
 }
+
+/* Mobile V4.1: remove repetitive hero summary card; keep primary actions compact */
+@media (max-width:767px){
+  .hero-card-ui{display:none!important}
+  .hero-bottom{gap:0;margin-top:8px}
+  .hero-card{padding-bottom:clamp(24px,8vw,40px)}
+  .hero-title{margin-bottom:0}
+}
