@@ -20,7 +20,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap">
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style.css?v=20261024-photo-stack-v7">
 <link rel="preload" as="image" href="images/hero.jpg" fetchpriority="high">
 <script>document.documentElement.classList.add('js');</script>
 
@@ -306,15 +306,17 @@
         <ul class="tags"><li>Vietnamese native</li><li>Interpretation</li><li>Documentation</li><li>Cross-cultural communication</li></ul>
         <div class="xp-type" aria-hidden="true"><span lang="zh-Hant">中</span><i>↔</i><span>VN</span><b>10–20<small>participants</small></b></div>
       </div>
-      <div class="xp-vis xp-vis--collage" aria-label="Two overlapping photos; on mobile, tap a photo to bring it to the front">
-        <figure class="ph par-wrap clip">
+      <div class="xp-vis xp-vis--collage" aria-label="Interactive photo collage: select either image to bring it forward">
+        <input class="collage-radio" type="radio" id="interpreter-photo-a" name="interpreter-photo" aria-label="Ministry of Education interpreter photo">
+        <input class="collage-radio" type="radio" id="interpreter-photo-b" name="interpreter-photo" aria-label="Career orientation interpreter photo" checked>
+        <figure class="ph ph--a par-wrap clip">
           <img data-par src="images/interpreter-moe-1.jpg" alt="Baro interpreting at a Ministry of Education program" loading="lazy" decoding="async">
-          <button class="photo-switch" type="button" aria-label="Bring Ministry of Education interpreter photo to the front" aria-pressed="false"></button>
+          <label for="interpreter-photo-a" class="photo-switch" aria-label="Bring Ministry of Education interpreter photo forward"></label>
           <figcaption>Interpreter · Ministry of Education Program</figcaption>
         </figure>
-        <figure class="ph ph--b par-wrap clip is-front">
+        <figure class="ph ph--b par-wrap clip">
           <img data-par src="images/career-orientation-event.jpg" alt="Trilingual interpretation at a career orientation event" loading="lazy" decoding="async">
-          <button class="photo-switch" type="button" aria-label="Bring career orientation interpreter photo to the front" aria-pressed="true"></button>
+          <label for="interpreter-photo-b" class="photo-switch" aria-label="Bring career orientation photo forward"></label>
           <figcaption>Trilingual Interpreter · Career Orientation Event</figcaption>
         </figure>
         <span class="collage-hint" aria-hidden="true">TAP A PHOTO TO BRING IT FORWARD ↗</span>
@@ -529,6 +531,6 @@
   <p id="certCap"></p>
 </dialog>
 
-<script src="js/main.js" defer></script>
+<script src="js/main.js?v=20261024-photo-stack-v7" defer></script>
 </body>
 </html>
