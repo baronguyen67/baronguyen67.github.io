@@ -175,6 +175,68 @@
     window.addEventListener('resize', schedule);
   }
 
+
+  /* ---------- scroll-controlled photo color (Playground) ---------- */
+  (function () {
+    var gallery = document.getElementById('collage');
+    if (!gallery) return;
+    var photos = $('.cp', gallery);
+    if (!photos.length) return;
+
+    var horizontal = window.matchMedia('(max-width: 900px)');
+    var scheduled = false;
+    function updateColor() {
+      scheduled = false;
+      var galleryRect = gallery.getBoundingClientRect();
+      var viewHeight = window.innerHeight || document.documentElement.clientHeight;
+      var visibleVertically = Math.max(0, Math.min(galleryRect.bottom, viewHeight) - Math.max(galleryRect.top, 0));
+      var onScreen = visibleVertically > Math.min(90, galleryRect.height * .12);
+
+      if (horizontal.matches) {
+        var midpoint = galleryRect.left + galleryRect.width / 2;
+        var nearest = null;
+        var smallestDistance = Infinity;
+        if (onScreen) {
+          photos.forEach(function (photo) {
+            var rect = photo.getBoundingClientRect();
+            var visibleWidth = Math.max(0, Math.min(rect.right, galleryRect.right) - Math.max(rect.left, galleryRect.left));
+            if (visibleWidth < 12) return;
+            var distance = Math.abs((rect.left + rect.right) / 2 - midpoint);
+            if (distance < smallestDistance) {
+              smallestDistance = distance;
+              nearest = photo;
+            }
+          });
+        }
+        photos.forEach(function (photo) { photo.classList.toggle('is-color', photo === nearest); });
+      } else {
+        photos.forEach(function (photo) {
+          var rect = photo.getBoundingClientRect();
+          var visibleHeight = Math.max(0, Math.min(rect.bottom, viewHeight) - Math.max(rect.top, 0));
+          var visibleWidth = Math.max(0, Math.min(rect.right, window.innerWidth) - Math.max(rect.left, 0));
+          photo.classList.toggle('is-color', visibleWidth > 12 && visibleHeight > Math.min(125, rect.height * .32));
+        });
+      }
+    }
+    function queueColorUpdate() {
+      if (scheduled) return;
+      scheduled = true;
+      window.requestAnimationFrame(updateColor);
+    }
+    gallery.addEventListener('scroll', queueColorUpdate, { passive: true });
+    window.addEventListener('scroll', queueColorUpdate, { passive: true });
+    window.addEventListener('resize', queueColorUpdate);
+    window.addEventListener('pageshow', queueColorUpdate);
+    if ('onscrollend' in gallery) gallery.addEventListener('scrollend', queueColorUpdate);
+    photos.forEach(function (photo) {
+      var img = photo.querySelector('img');
+      if (img && !img.complete) img.addEventListener('load', queueColorUpdate, { once: true });
+    });
+    queueColorUpdate();
+    // Recheck after mobile Safari restores an earlier scroll position or finishes snap.
+    window.setTimeout(queueColorUpdate, 220);
+  })();
+
   /* ---------- magnetic buttons ---------- */
   if (finePointer && !reduce) {
     $$('.mag').forEach(function (el) {
