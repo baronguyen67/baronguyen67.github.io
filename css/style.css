@@ -960,3 +960,77 @@ button.cred-card{cursor:pointer}
     filter:grayscale(0) contrast(1) saturate(1.12);
   }
 }
+
+/* V14 desktop interpreter collage: select-to-front in original color */
+@media (min-width:768px){
+  .xp-vis--collage{
+    isolation:isolate;
+    overflow:visible;
+  }
+  .xp-vis--collage .ph{
+    z-index:1;
+    cursor:pointer;
+    will-change:transform;
+    filter:none;
+    transition:
+      transform .48s cubic-bezier(.22,.8,.2,1),
+      box-shadow .48s cubic-bezier(.22,.8,.2,1);
+  }
+  .xp-vis--collage .ph--b{z-index:2}
+  .xp-vis--collage .ph img,
+  .xp-vis--collage .ph:hover img,
+  .xp-vis--collage .ph:focus-within img{
+    filter:grayscale(1) contrast(1.04);
+    scale:1;
+    transition:filter .6s cubic-bezier(.22,.8,.2,1);
+  }
+  .xp-vis--collage #interpreter-photo-a:checked ~ .ph--a,
+  .xp-vis--collage #interpreter-photo-b:checked ~ .ph--b{
+    z-index:7;
+    transform:translateY(-10px) rotate(0deg) scale(1.04);
+    box-shadow:0 24px 45px rgba(0,0,0,.27),0 0 0 5px var(--paper);
+  }
+  .xp-vis--collage #interpreter-photo-a:checked ~ .ph--a img,
+  .xp-vis--collage #interpreter-photo-a:checked ~ .ph--a:hover img,
+  .xp-vis--collage #interpreter-photo-b:checked ~ .ph--b img,
+  .xp-vis--collage #interpreter-photo-b:checked ~ .ph--b:hover img{
+    filter:grayscale(0) contrast(1) saturate(1.08);
+    scale:1;
+  }
+  .xp-vis--collage .ph figcaption,
+  .xp-vis--collage .ph:hover figcaption,
+  .xp-vis--collage .ph:focus-within figcaption{
+    opacity:0;
+    visibility:hidden;
+    transform:translateY(7px);
+    pointer-events:none;
+  }
+  .xp-vis--collage #interpreter-photo-a:checked ~ .ph--a figcaption,
+  .xp-vis--collage #interpreter-photo-b:checked ~ .ph--b figcaption{
+    opacity:1;
+    visibility:visible;
+    transform:translateY(0);
+  }
+  /* Full-card click targets are native labels for the existing radio inputs.
+     They work with mouse, keyboard, and touch without a JS click handler. */
+  .xp-vis--collage .photo-switch{
+    display:block;
+    position:absolute;
+    inset:0;
+    z-index:8;
+    width:100%;
+    height:100%;
+    cursor:pointer;
+  }
+  .xp-vis--collage #interpreter-photo-a:focus-visible ~ .ph--a .photo-switch,
+  .xp-vis--collage #interpreter-photo-b:focus-visible ~ .ph--b .photo-switch{
+    outline:3px solid var(--ink);
+    outline-offset:-5px;
+    border-radius:20px;
+  }
+}
+@media (prefers-reduced-motion:reduce){
+  .xp-vis--collage .ph,.xp-vis--collage .ph img{
+    transition:none!important;
+  }
+}
