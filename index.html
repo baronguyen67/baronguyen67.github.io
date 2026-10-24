@@ -474,6 +474,18 @@
     </h2>
     <p class="sub rv">Campus life, cultural exchange and the programs I've helped run.</p>
 
+    <div class="turntable-toolbar" aria-label="Rotating photo gallery controls">
+      <div class="turntable-intro">
+        <span class="turntable-mark" aria-hidden="true">✳</span>
+        <span>Moments in motion <small>Six stories · one rotating gallery</small></span>
+      </div>
+      <div class="turntable-controls">
+        <button class="turntable-arrow" id="turntablePrev" type="button" aria-label="Previous photo">←</button>
+        <span class="turntable-counter" id="turntableCounter" aria-live="off">01 <span>/ 06</span></span>
+        <button class="turntable-arrow" id="turntableNext" type="button" aria-label="Next photo">→</button>
+      </div>
+    </div>
+
     <div class="collage" id="collage">
       <figure class="cp cp--1 par-wrap clip"><img data-par src="images/ev-academy-philippines.jpg" alt="Classmates at EV Academy in the Philippines" loading="lazy" decoding="async"><figcaption><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>Cebu · 2023 — EV Academy</figcaption></figure>
       <figure class="cp cp--2 par-wrap clip"><img data-par src="images/career-orientation-event.jpg" alt="Career orientation event with trilingual interpretation" loading="lazy" decoding="async"><figcaption>Trilingual Interpreter · Career Orientation Event</figcaption></figure>
@@ -488,6 +500,17 @@
         <p class="typing" aria-hidden="true"><i></i><i></i><i></i></p>
       </div>
       <span class="note hand" aria-hidden="true">international life ↘</span>
+    </div>
+    <div class="turntable-footer" aria-label="Photo gallery position">
+      <p id="turntableActiveCaption" class="turntable-active-caption" aria-live="polite">Cebu · 2023 — EV Academy</p>
+      <div class="turntable-progress" id="turntableProgress" role="group" aria-label="Choose a photo">
+        <button type="button" class="turntable-dot" data-slide="0" aria-label="Show photo 1" aria-pressed="true"></button>
+        <button type="button" class="turntable-dot" data-slide="1" aria-label="Show photo 2" aria-pressed="false"></button>
+        <button type="button" class="turntable-dot" data-slide="2" aria-label="Show photo 3" aria-pressed="false"></button>
+        <button type="button" class="turntable-dot" data-slide="3" aria-label="Show photo 4" aria-pressed="false"></button>
+        <button type="button" class="turntable-dot" data-slide="4" aria-label="Show photo 5" aria-pressed="false"></button>
+        <button type="button" class="turntable-dot" data-slide="5" aria-label="Show photo 6" aria-pressed="false"></button>
+      </div>
     </div>
   </div>
 </section>
