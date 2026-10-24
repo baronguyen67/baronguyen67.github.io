@@ -753,3 +753,20 @@ button.cred-card{cursor:pointer}
     transition:none!important;
   }
 }
+
+/* Mobile V7: CSS-only radio photo stack - works without JS in iOS webviews */
+.collage-radio{position:absolute;width:1px;height:1px;margin:0;padding:0;opacity:0;clip-path:inset(50%);overflow:hidden}
+@media (max-width:767px){
+  .xp-vis--collage{position:relative;isolation:isolate;width:100%;aspect-ratio:1 / 1.12;min-height:345px;overflow:visible;margin:6px 0 26px}
+  .xp-vis--collage .ph{position:absolute;left:0;top:0;right:auto;bottom:auto;width:72%;aspect-ratio:4/5;z-index:1;transform:rotate(-3deg);border-radius:22px;overflow:hidden;filter:brightness(.91);box-shadow:0 12px 25px rgba(0,0,0,.15);transition:transform .42s cubic-bezier(.22,.8,.2,1),filter .42s ease,box-shadow .42s ease}
+  .xp-vis--collage .ph--b{left:auto;right:0;top:26%;bottom:auto;width:68%;aspect-ratio:1/1;z-index:2;transform:rotate(3deg);box-shadow:0 12px 25px rgba(0,0,0,.15)}
+  #interpreter-photo-a:checked ~ .ph--a,#interpreter-photo-b:checked ~ .ph--b{z-index:7;filter:brightness(1);transform:translateY(-10px) rotate(0deg) scale(1.04);box-shadow:0 24px 45px rgba(0,0,0,.28),0 0 0 5px var(--paper)}
+  #interpreter-photo-a:checked ~ .ph--b,#interpreter-photo-b:checked ~ .ph--a{z-index:1;filter:brightness(.87)}
+  .xp-vis--collage .photo-switch{display:block;position:absolute;inset:0;width:100%;height:100%;z-index:8;border:0;background:transparent;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+  .xp-vis--collage .ph figcaption{position:absolute;left:10px;right:10px;bottom:10px;z-index:7;width:calc(100% - 20px);max-width:calc(100% - 20px);white-space:normal;overflow-wrap:anywhere;font-size:10px;line-height:1.4;letter-spacing:.02em;border-radius:14px;opacity:0;visibility:hidden;transform:translateY(6px);pointer-events:none;transition:opacity .35s ease,transform .35s ease}
+  #interpreter-photo-a:checked ~ .ph--a figcaption,#interpreter-photo-b:checked ~ .ph--b figcaption{opacity:1;visibility:visible;transform:none}
+  .xp-vis--collage .collage-hint{position:absolute;bottom:2px;left:0;display:block;font-size:10px;font-weight:700;letter-spacing:.12em;color:var(--mute)}
+  #interpreter-photo-a:focus-visible ~ .ph--a .photo-switch,#interpreter-photo-b:focus-visible ~ .ph--b .photo-switch{outline:3px solid #fff;outline-offset:-7px}
+}
+@media (max-width:390px){.xp-vis--collage{min-height:330px}}
+@media (prefers-reduced-motion:reduce){.xp-vis--collage .ph{transition:none!important}}
