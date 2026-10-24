@@ -287,22 +287,33 @@ h1,h2,h3,h4,p,dl,dd,figure,blockquote{margin:0}
 .tl{margin-top:clamp(30px,4vw,60px);position:relative}
 .tl::before{content:"";position:absolute;left:51px;top:20px;bottom:20px;width:1.5px;background:var(--ink);opacity:.25}
 .tl-i{display:grid;grid-template-columns:104px 1fr;gap:clamp(16px,2vw,28px);padding:0 0 clamp(26px,3vw,40px);position:relative}
-.logo{width:104px;height:64px;object-fit:contain;background:#fff;border-radius:22px;padding:10px 12px;border:1.5px solid var(--ink);box-shadow:0 10px 24px rgba(17,17,17,.06)}
+.logo-box{width:104px;height:78px;background:#0f0f0f;border-radius:24px;padding:10px;border:1.5px solid rgba(255,255,255,.08);box-shadow:inset 0 0 0 1px rgba(255,255,255,.06),0 12px 26px rgba(17,17,17,.08);display:grid;place-items:center;overflow:hidden}
+.logo{display:block;max-width:none;object-fit:cover;object-position:center;border-radius:16px;background:#fff;box-shadow:0 0 0 1px rgba(255,255,255,.07)}
+.logo--ntut{width:112%;height:112%}
+.logo--pu{width:120%;height:120%}
+.logo--eva{width:118%;height:118%}
 .tl-d{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;margin-bottom:6px}
 .tl h3{font-size:clamp(26px,3.4vw,52px);font-weight:800;line-height:.98;letter-spacing:-.05em;text-transform:uppercase;margin-bottom:6px}
 .tl-s{font-weight:600;margin-bottom:6px}
 .tl .mute{max-width:46ch;font-size:15px}
-.cred{background:var(--ink);color:#fff;border-radius:var(--r-xl);padding:clamp(24px,2.8vw,40px);position:sticky;top:96px;margin-top:clamp(0px,4vw,60px)}
-.cred-h{font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;opacity:.78;margin-bottom:12px}
-.cred-list li{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:20px;border-bottom:1px solid rgba(255,255,255,.18);padding:18px 0}
-.cred-list li:last-child{border-bottom:0}
-.cred-btn{all:unset;box-sizing:border-box;width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:20px;cursor:pointer;transition:opacity .3s}
-.cred-btn:hover{opacity:.78}
-.cred-btn:focus-visible{outline:2px solid #fff;outline-offset:4px;border-radius:6px}
-.cred-v{font-size:clamp(30px,3.6vw,54px);font-weight:800;letter-spacing:-.06em;line-height:.92;max-width:6.4ch}
-.cred-list li:last-child .cred-v{font-size:clamp(26px,3vw,46px)}
-.cred-k{font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;text-align:right;opacity:.88;justify-self:end}
-.cred-k i{display:block;font-style:normal;opacity:.6;margin-top:5px}
+.cred{background:linear-gradient(180deg,#0d0d0d 0%,#131313 100%);color:#fff;border-radius:var(--r-xl);padding:clamp(24px,2.8vw,38px);position:sticky;top:96px;margin-top:clamp(0px,4vw,60px);border:1px solid rgba(255,255,255,.08);box-shadow:0 22px 60px rgba(0,0,0,.16)}
+.cred-h{font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;opacity:.78;margin-bottom:10px}
+.cred-sub{font-size:14px;line-height:1.45;color:rgba(255,255,255,.66);max-width:30ch;margin-bottom:18px}
+.cred-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.cred-card{all:unset;box-sizing:border-box;min-height:180px;border-radius:26px;padding:18px 18px 16px;display:flex;flex-direction:column;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.10);position:relative;overflow:hidden;transition:transform .35s var(--ease),border-color .35s var(--ease),background .35s var(--ease);cursor:default}
+.cred-card::before{content:"";position:absolute;inset:auto -20% -35% auto;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);opacity:.45;pointer-events:none}
+button.cred-card{cursor:pointer}
+.cred-card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.22);background:rgba(255,255,255,.05)}
+.cred-card--solid{background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.04));grid-column:span 2;min-height:150px}
+.cred-card--solid .cred-card-v{font-size:clamp(58px,5.6vw,88px)}
+.cred-card--outline{border-style:dashed}
+.cred-card--accent{background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(133,133,133,.02))}
+.cred-card-k{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:rgba(255,255,255,.72)}
+.cred-card-v{font-size:clamp(44px,4.2vw,62px);font-weight:800;letter-spacing:-.06em;line-height:.9}
+.cred-card-note,.cred-card-link{font-size:13px;letter-spacing:.03em;color:rgba(255,255,255,.72)}
+.cred-card-link{font-weight:600}
+.cred-card--link .cred-card-link{display:inline-flex;align-items:center;gap:6px}
+.cred-card--link .cred-card-v{max-width:5.2ch}
 
 .modal{border:0;padding:0;background:transparent;max-width:min(92vw,880px);max-height:92svh;overflow:visible}
 .modal::backdrop{background:rgba(10,10,10,.78)}
@@ -423,11 +434,15 @@ h1,h2,h3,h4,p,dl,dd,figure,blockquote{margin:0}
   .sk{min-height:0}
   .c-list{grid-template-columns:1fr}
   .xp-vis--collage .ph{width:70%}
+  .cred-grid{grid-template-columns:1fr}
+  .cred-card--solid{grid-column:auto;min-height:140px}
+  .cred-card{min-height:150px}
   .ask-go{padding:10px 14px}
   .ask-bar{padding-left:14px}
   .tl::before{left:35px}
   .tl-i{grid-template-columns:72px 1fr}
-  .logo{width:72px;height:52px;padding:7px 8px;border-radius:16px}
+  .logo-box{width:72px;height:62px;padding:7px;border-radius:18px}
+  .logo{border-radius:12px}
   .stamp{right:-2px}
 }
 
