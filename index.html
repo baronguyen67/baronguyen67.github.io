@@ -1,320 +1,538 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Nguyen Van Bao · Portfolio</title>
-<meta name="description" content="Portfolio of Nguyen Van Bao — NTUT MBA candidate focused on Vietnamese interpretation, multilingual communication, and accurate data handling." />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nguyen Van Bao (Baro) · Portfolio</title>
+<meta name="description" content="Portfolio of Nguyen Van Bao (Baro, 阮文寶) — NTUT MBA candidate in Taipei working across business, operations, Chinese–Vietnamese–English interpretation and SQL data analysis.">
+<meta name="theme-color" content="#F4F3EF">
+<link rel="canonical" href="https://baronguyen67.github.io/">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Nguyen Van Bao (Baro) · Portfolio">
+<meta property="og:description" content="NTUT MBA candidate in Taipei. Business × Operations × Data — interpretation, B2B research and SQL case studies.">
+<meta property="og:url" content="https://baronguyen67.github.io/">
+<meta property="og:image" content="https://baronguyen67.github.io/images/hero.jpg">
+<meta property="og:image:alt" content="Portrait of Nguyen Van Bao">
+<meta name="twitter:card" content="summary_large_image">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap">
+<link rel="stylesheet" href="css/style.css">
+<link rel="preload" as="image" href="images/hero.jpg" fetchpriority="high">
+<script>document.documentElement.classList.add('js');</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Nguyen Van Bao",
+  "alternateName": ["Baro", "阮文寶"],
+  "url": "https://baronguyen67.github.io/",
+  "email": "mailto:vanbao7448@gmail.com",
+  "address": { "@type": "PostalAddress", "addressLocality": "Taipei", "addressCountry": "TW" },
+  "alumniOf": [{ "@type": "CollegeOrUniversity", "name": "Providence University" }],
+  "knowsLanguage": ["Vietnamese", "Mandarin Chinese", "English"],
+  "sameAs": ["https://github.com/baronguyen67", "https://www.instagram.com/baoba.o2003"]
+}
+</script>
 </head>
+
 <body>
+<a class="skip" href="#main">Skip to content</a>
 
-<nav class="site-nav">
-  <div class="wrap">
-    <a href="#top" class="brand-mark">Nguyen Van Bao <span class="han">阮文寶</span></a>
-    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">☰</button>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="#about">About</a></li>
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#education">Education</a></li>
-      <li><a href="#activities">Activities</a></li>
-      <li><a href="#certificates">Certificates</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </div>
-</nav>
+<!-- icon sprite -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-pin" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21s-8.5-5.2-8.5-11.3A4.7 4.7 0 0 1 12 7.2a4.7 4.7 0 0 1 8.5 2.5C20.5 15.8 12 21 12 21Z"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M7 17 17 7M8 7h9v9"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-6-6 6 6 6-6"/></symbol>
+</svg>
 
-<header class="hero" id="top">
-  <div class="hero-bg-glyph" aria-hidden="true">寶</div>
-  <div class="wrap hero-inner">
-    <div class="hero-top">
-      <div class="hero-text">
-        <span class="eyebrow">Taipei, Taiwan · NTUT MBA Candidate · Vietnamese Language &amp; Data</span>
-        <h1>Bridging languages and communication<br>with <em>data accuracy</em>.</h1>
-        <p class="tagline">
-          I'm <strong>Bao</strong> (Baro), a native Vietnamese speaker and NTUT MBA candidate with hands-on experience in
-          <strong>Chinese–Vietnamese and Chinese–Vietnamese–English interpretation</strong> during academic programs and workshops.
-          I combine multilingual communication and careful documentation with practical SQL and structured-data skills.
-        </p>
-        <div class="hero-actions">
-          <a href="#projects" class="btn btn-primary">Explore Projects &rarr;</a>
-          <a href="resume.pdf" class="btn btn-ghost" target="_blank" rel="noopener">View Resume</a>
-        </div>
-        <div class="hero-langs">
-          <span><b>VN</b> Vietnamese · Native</span>
-          <span><b>中</b> Mandarin · TOCFL B2</span>
-          <span><b>EN</b> English · TOEIC 825</span>
-        </div>
-      </div>
-      <div class="hero-photo">
-        <div class="photo-frame"><img src="images/profile.jpg" alt="Photo of Nguyen Van Bao"></div>
-      </div>
-    </div>
-  </div>
+<!-- NAV -->
+<header class="nav" id="nav">
+  <a class="pill pill--logo mag" href="#top" aria-label="Baro — back to top">BARO<span class="dot">.</span></a>
+
+  <nav class="pill pill--links" aria-label="Primary">
+    <span class="nav-ind" aria-hidden="true"></span>
+    <a href="#about" data-nav="about">About</a>
+    <a href="#projects" data-nav="projects">Projects</a>
+    <a href="#experience" data-nav="experience">Experience</a>
+    <a href="#playground" data-nav="playground">Playground</a>
+    <a href="#contact" data-nav="contact">Contact</a>
+  </nav>
+
+  <a class="pill pill--dark mag nav-resume" href="resume.pdf" target="_blank" rel="noopener">Resume <svg class="ic"><use href="#i-arrow"/></svg></a>
+
+  <button class="pill pill--menu" id="menuBtn" type="button" aria-expanded="false" aria-controls="menu">
+    <span class="menu-label">Menu</span><span class="burger" aria-hidden="true"><i></i><i></i></span>
+  </button>
 </header>
 
-<section id="about">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <span class="eyebrow">About</span>
-      <h2>Connecting multilingual communication with reliable information.</h2>
-      <p class="section-intro">My strengths connect Vietnamese language expertise, interpretation, documentation, and practical analysis.</p>
+<div class="menu" id="menu" hidden>
+  <nav aria-label="Mobile">
+    <a href="#about"><span>01</span>About</a>
+    <a href="#projects"><span>02</span>Projects</a>
+    <a href="#experience"><span>03</span>Experience</a>
+    <a href="#playground"><span>04</span>Playground</a>
+    <a href="#contact"><span>05</span>Contact</a>
+  </nav>
+  <a class="btn btn--dark menu-cv" href="resume.pdf" target="_blank" rel="noopener">Resume <svg class="ic"><use href="#i-arrow"/></svg></a>
+</div>
+
+<main id="main">
+
+<!-- HERO -->
+<section class="hero" id="top" aria-label="Introduction">
+  <div class="hero-card">
+    <img class="hero-img" src="images/hero.jpg" width="2000" height="1125" fetchpriority="high" decoding="async"
+         alt="Portrait of Nguyen Van Bao in a black leather jacket and round glasses, resting his chin on his hand">
+    <div class="hero-shade" aria-hidden="true"></div>
+
+    <div class="hero-top">
+      <ul class="chips" aria-label="At a glance">
+        <li class="chip chip--status"><span class="live" aria-hidden="true"></span>Currently in Taipei <span class="clock" id="clock" aria-hidden="true"></span></li>
+        <li class="chip"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>Taipei, Taiwan</li>
+        <li class="chip">MBA @ NTUT</li>
+        <li class="chip">Vietnamese · <span lang="zh-Hant">中文</span> · English</li>
+      </ul>
     </div>
 
-    <div class="about-showcase reveal">
+    <div class="hero-bottom">
+      <h1 class="hero-title">
+        <span class="ln"><span class="ln-i">Nguyen</span></span>
+        <span class="ln"><span class="ln-i">Van Bao</span></span>
+        <em class="hand" aria-hidden="true">(Baro)</em>
+        <span class="sr">— Baro, 阮文寶</span>
+      </h1>
+
+      <aside class="hero-card-ui rv" aria-label="Summary">
+        <div class="ui-head">
+          <img class="avatar" src="images/profile.jpg" width="56" height="56" alt="" decoding="async">
+          <div>
+            <strong>Baro <span class="zh" lang="zh-Hant">阮文寶</span></strong>
+            <span>NTUT MBA Candidate</span>
+          </div>
+          <button class="heart" type="button" aria-pressed="false" aria-label="Save Baro to favorites">
+            <svg class="ic"><use href="#i-heart"/></svg>
+          </button>
+        </div>
+        <p class="ui-pos">Business <i>×</i> Operations <i>×</i> Data</p>
+        <p class="ui-sub">Native Vietnamese speaker. Interpreter, B2B researcher and SQL case-study builder, connecting Taiwan and Vietnam.</p>
+        <ul class="ui-facts">
+          <li><b>20+</b>qualified leads</li>
+          <li><b>2</b>SQL case studies</li>
+          <li><b>3</b>languages</li>
+        </ul>
+        <div class="ui-actions">
+          <a class="btn btn--dark mag" href="#projects">See projects <svg class="ic"><use href="#i-down"/></svg></a>
+          <a class="btn btn--line mag" href="mailto:vanbao7448@gmail.com">Open to opportunities <svg class="ic"><use href="#i-arrow"/></svg></a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<div class="marquee marquee--dark" aria-label="Languages">
+  <div class="marquee-track">
+    <span>Vietnamese — Native</span><span class="sep">✦</span><span lang="zh-Hant">Mandarin — TOCFL B2</span><span class="sep">✦</span><span>English — TOEIC 825</span><span class="sep">✦</span>
+    <span aria-hidden="true">Vietnamese — Native</span><span class="sep" aria-hidden="true">✦</span><span aria-hidden="true">Mandarin — TOCFL B2</span><span class="sep" aria-hidden="true">✦</span><span aria-hidden="true">English — TOEIC 825</span><span class="sep" aria-hidden="true">✦</span>
+    <span aria-hidden="true">Vietnamese — Native</span><span class="sep" aria-hidden="true">✦</span><span aria-hidden="true">Mandarin — TOCFL B2</span><span class="sep" aria-hidden="true">✦</span><span aria-hidden="true">English — TOEIC 825</span><span class="sep" aria-hidden="true">✦</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="sec about" id="about" data-nav="about" aria-labelledby="about-h">
+  <div class="wrap">
+    <p class="eyebrow rv"><span>(01)</span> About</p>
+
+    <h2 class="mega" id="about-h">
+      <span class="ln"><span class="ln-i">Business</span></span>
+      <span class="ln"><span class="ln-i"><em class="serif">meets</em> culture</span></span>
+      <span class="ln"><span class="ln-i"><em class="serif">meets</em> data.</span></span>
+    </h2>
+
+    <div class="about-grid">
       <div class="about-copy">
-        <div class="about-copy-card">
-          <p>
-            I'm a graduate of <strong>International Business Administration at Providence University</strong> and currently pursuing an
-            <strong>MBA at NTUT (Taipei Tech)</strong>.
-          </p>
-          <p>
-            My background combines <strong>Chinese–Vietnamese interpretation for international student delegations and trilingual interpretation during lectures and workshops</strong>.
-            Alongside that experience, I have been building practical analytical skills through Excel, Google Sheets, and SQL projects focused on e-commerce and customer behavior.
-          </p>
-          <p>
-            I am interested in <strong>Vietnamese audio transcription, language-data support, accurate documentation, and entry-level data quality</strong> roles where I can learn and contribute.
-          </p>
-        </div>
-
-        <div class="about-copy-card soft">
-          <h3>What I bring</h3>
-          <ul class="about-value-list">
-            <li>Vietnamese, Mandarin, and English for cross-border communication</li>
-            <li>Interpretation experience in academic programs and workshops</li>
-            <li>Experience with administrative documentation and attendance records</li>
-            <li>SQL for customer, sales, product, and e-commerce analysis</li>
-          </ul>
-        </div>
-
-        <blockquote class="about-quote">“Clear communication and careful information handling make reliable work possible.”</blockquote>
+        <p class="lead rv">I'm <b>Bao (Baro)</b>, a native Vietnamese speaker and NTUT MBA candidate. I studied International Business Administration at Providence University, interpreted between Chinese, Vietnamese and English at academic programs and workshops, researched Vietnamese B2B prospects for a Taiwan–Vietnam logistics company, and built SQL projects on e-commerce and customer behavior.</p>
+        <p class="rv">The MBA is where I'm broadening into operations, digital transformation and decision-making, while keeping language accuracy and careful documentation at the center of how I work.</p>
+        <blockquote class="pull rv">
+          <span class="hand">“Clear communication and careful information handling make reliable work possible.”</span>
+        </blockquote>
       </div>
 
-      <div class="about-dashboard">
-        <div class="about-stat about-stat-hero">
-          <span class="about-stat-kicker">Current direction</span>
-          <h3>Language × Communication × Data</h3>
-          <p>Interpretation, language accuracy, and practical analytics.</p>
-        </div>
-        <div class="about-stat"><span class="num">3</span><span class="label">Working languages: Vietnamese, Mandarin, English</span></div>
-        <div class="about-stat"><span class="num">2</span><span class="label">Completed SQL portfolio projects in e-commerce and customer analysis</span></div>
-        <div class="about-stat"><span class="num">MBA</span><span class="label">Developing broader operations, digital transformation, and decision-making skills</span></div>
-        <div class="about-stat"><span class="num">Growth</span><span class="label">Seeking entry-level language-data and documentation opportunities</span></div>
+      <ol class="mods" aria-label="Quick facts">
+        <li class="mod rv"><span class="mod-n">01</span><strong>Vietnam</strong><span>Native language</span></li>
+        <li class="mod rv"><span class="mod-n">02</span><strong>Taiwan</strong><span>Study + work</span></li>
+        <li class="mod rv"><span class="mod-n">03</span><strong>3 languages</strong><span>Vietnamese / Mandarin / English</span></li>
+        <li class="mod mod--dark rv"><span class="mod-n">04</span><strong>MBA</strong><span>Taipei Tech</span></li>
+      </ol>
+    </div>
+
+    <!-- search-bar storytelling -->
+    <div class="ask rv" id="ask">
+      <div class="ask-bar">
+        <svg class="ic" aria-hidden="true"><use href="#i-search"/></svg>
+        <p class="ask-q"><span id="askText">What can Bao bring to a team?</span><i class="caret" aria-hidden="true"></i></p>
+        <button class="ask-go" type="button" id="askGo">Search</button>
       </div>
+      <ul class="ask-res" id="askRes">
+        <li><b>Cross-cultural communication</b><span>Chinese–Vietnamese–English interpretation for student delegations, lectures and workshops.</span></li>
+        <li><b>Business thinking</b><span>Vietnamese B2B prospect research and a structured prospect database for Taiwan–Vietnam logistics.</span></li>
+        <li><b>Reliable execution</b><span>Check-ins, attendance records, logistics and technical setup across 30+ academic events.</span></li>
+        <li><b>Data curiosity</b><span>Two completed SQL Server case studies on e-commerce and customer behavior.</span></li>
+      </ul>
     </div>
   </div>
 </section>
 
-<section id="experience">
+<!-- PROJECTS -->
+<section class="sec projects" id="projects" data-nav="projects" aria-labelledby="proj-h">
   <div class="wrap">
-    <div class="section-head reveal">
-      <span class="eyebrow">Experience &amp; Evidence</span>
-      <h2>Interpretation and multilingual support backed by data skills.</h2>
-      <p class="section-intro">Real experience in academic interpretation, student programs, and structured information handling.</p>
-    </div>
+    <p class="eyebrow rv"><span>(02)</span> Selected projects</p>
+    <h2 class="mega mega--md" id="proj-h">
+      <span class="ln"><span class="ln-i">Data, aimed at</span></span>
+      <span class="ln"><span class="ln-i"><em class="serif">business</em> questions.</span></span>
+    </h2>
+    <p class="sub rv">SQL projects built around practical e-commerce, customer, product and decision-support questions.</p>
 
-    <div class="resume-strip reveal">
-      <div><h3>Full Resume (PDF)</h3><p>For complete education, work history, certificates, and activities, open the full resume.</p></div>
-      <a href="resume.pdf" class="btn btn-primary" target="_blank" rel="noopener">View / Download Resume</a>
-    </div>
+    <!-- 001 -->
+    <article class="case rv" aria-labelledby="c1-t">
+      <header class="case-head">
+        <span class="case-no">Project 001</span>
+        <span class="tag tag--solid">Completed · SQL Server</span>
+      </header>
+      <h3 class="case-title" id="c1-t">E-commerce Sales <em class="serif">&amp;</em> Customer Behavior Analysis</h3>
 
-    <div class="xp-showcase reveal">
-      <div class="xp-feature-card">
-        <span class="xp-label">Featured experience · 2022–2026</span>
+      <dl class="stats stats--3">
+        <div><dt>Sales records</dt><dd data-count>23,935</dd></div>
+        <div><dt>Orders</dt><dd data-count>10,695</dd></div>
+        <div><dt>Customers</dt><dd data-count>9,133</dd></div>
+      </dl>
+
+      <div class="case-cols">
+        <section>
+          <h4>Question</h4>
+          <p>What patterns can help explain customer and sales performance?</p>
+          <p class="mute">Looked at monthly sales trends, product/category concentration, repeat-customer value, top customers and territory performance.</p>
+        </section>
+        <section>
+          <h4>Tools</h4>
+          <ul class="tags"><li>SQL Server</li><li>CTEs</li><li>Window Functions</li><li>E-commerce Analysis</li></ul>
+        </section>
+        <section class="insight">
+          <h4>Insight</h4>
+          <p>Repeat customers were only <b>13.2%</b> of buyers but generated <b>28.7%</b> of revenue.</p>
+          <div class="bars" role="img" aria-label="Repeat customers: 13.2 percent of buyers, 28.7 percent of revenue">
+            <div class="bar"><span>Share of buyers</span><i style="--w:13.2%"></i><b>13.2%</b></div>
+            <div class="bar bar--hi"><span>Share of revenue</span><i style="--w:28.7%"></i><b>28.7%</b></div>
+          </div>
+        </section>
+      </div>
+
+      <footer class="case-actions">
+        <a class="btn btn--dark mag" href="https://github.com/baronguyen67/ecommerce-sales-customer-behavior-analysis" target="_blank" rel="noopener">View case study on GitHub <svg class="ic"><use href="#i-arrow"/></svg></a>
+      </footer>
+    </article>
+
+    <!-- 002 -->
+    <article class="case case--alt rv" aria-labelledby="c2-t">
+      <header class="case-head">
+        <span class="case-no">Project 002</span>
+        <span class="tag tag--solid">Completed · SQL Server</span>
+      </header>
+      <h3 class="case-title" id="c2-t">Customer Segmentation <em class="serif">&amp;</em> Product Performance Analysis</h3>
+
+      <dl class="stats stats--4">
+        <div><dt>In sales</dt><dd data-count>$6.52M</dd></div>
+        <div><dt>Orders</dt><dd data-count>25,728</dd></div>
+        <div><dt>Customers</dt><dd data-count>17,415</dd></div>
+        <div><dt>Champions</dt><dd data-count>3,065</dd></div>
+      </dl>
+
+      <div class="case-cols">
+        <section>
+          <h4>Question</h4>
+          <p>Which customers, products, categories and regions drive sales, and how can customers be segmented by value?</p>
+        </section>
+        <section>
+          <h4>Tools</h4>
+          <ul class="tags"><li>SQL Server</li><li>RFM</li><li>PERCENT_RANK</li><li>Customer Analytics</li></ul>
+        </section>
+        <section class="insight">
+          <h4>Insight</h4>
+          <p>Built a percentile-based RFM framework. It identified <b>3,065 Champions</b>, and Corporate customers generated <b>58.93%</b> of sales.</p>
+          <div class="bars" role="img" aria-label="Corporate customers generated 58.93 percent of sales">
+            <div class="bar bar--hi"><span>Corporate share of sales</span><i style="--w:58.93%"></i><b>58.93%</b></div>
+          </div>
+        </section>
+      </div>
+
+      <footer class="case-actions">
+        <a class="btn btn--dark mag" href="https://github.com/baronguyen67/customer-segmentation-product-performance-analysis" target="_blank" rel="noopener">View case study on GitHub <svg class="ic"><use href="#i-arrow"/></svg></a>
+      </footer>
+    </article>
+
+    <!-- next -->
+    <article class="case case--next rv" aria-labelledby="c3-t">
+      <header class="case-head">
+        <span class="case-no">Project 003</span>
+        <span class="tag tag--ghost"><span class="live" aria-hidden="true"></span>Currently exploring · Next project</span>
+      </header>
+      <h3 class="case-title" id="c3-t">Digital Marketing <em class="serif">&amp;</em> Website Conversion Analysis</h3>
+      <p class="next-p">Planned next project using website sessions, traffic sources, campaigns, orders and conversion data to connect acquisition performance with e-commerce operations.</p>
+      <ol class="flow" aria-label="Planned data flow">
+        <li>Sessions</li><li>Traffic sources</li><li>Campaigns</li><li>Orders</li><li>Conversion</li>
+      </ol>
+      <ul class="tags tags--light"><li>SQL</li><li>Web Analytics</li><li>Conversion</li><li>Learning in progress</li></ul>
+    </article>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="sec experience" id="experience" data-nav="experience" aria-labelledby="exp-h">
+  <div class="wrap">
+    <p class="eyebrow rv"><span>(03)</span> Selected experience</p>
+    <h2 class="mega mega--md" id="exp-h">
+      <span class="ln"><span class="ln-i">Real rooms,</span></span>
+      <span class="ln"><span class="ln-i"><em class="serif">real</em> languages.</span></span>
+    </h2>
+    <p class="sub rv">Interpretation, B2B research and event operations from 2022 to 2026. <a class="ulink" href="resume.pdf" target="_blank" rel="noopener">Full resume (PDF) ↗</a></p>
+
+    <!-- 01 -->
+    <article class="xp rv">
+      <div class="xp-vis xp-vis--type" aria-hidden="true">
+        <span class="xp-big">20<i>+</i></span>
+        <span class="xp-cap">Qualified leads<br>in the first two months</span>
+      </div>
+      <div class="xp-txt">
+        <p class="xp-n">01</p>
+        <h3>Business Development <em class="serif">&amp;</em> Telesales Intern</h3>
+        <p class="xp-meta">Du Bang Customs Clearance Logistics · Taichung · 2025 — 2026</p>
+        <p>Researched Vietnamese B2B prospects and built a structured prospect database to support Taiwan–Vietnam logistics services. Generated 20+ qualified leads within the first two months and managed follow-up communications.</p>
+        <ul class="tags"><li>B2B research</li><li>Prospect database</li><li>Taiwan ↔ Vietnam</li><li>Follow-ups</li></ul>
+      </div>
+    </article>
+
+    <!-- 02 -->
+    <article class="xp xp--flip rv">
+      <div class="xp-txt">
+        <p class="xp-n">02</p>
         <h3>Chinese–Vietnamese Interpreter</h3>
-        <p class="xp-org">Taiwan Ministry of Education Programs · Providence University · Part-time</p>
-        <p>Provided Chinese–Vietnamese interpretation and administrative support for international student delegations of 10–20 participants, assisting with procedures, cultural orientation, and documentation.</p>
-        <div class="xp-tag-list"><span>Vietnamese Native</span><span>Interpretation</span><span>Documentation</span><span>Cross-cultural Communication</span></div>
+        <p class="xp-meta">Taiwan Ministry of Education Programs · Providence University · Part-time · 2022 — 2026</p>
+        <p>Provided Chinese–Vietnamese interpretation and administrative support for international student delegations of 10–20 participants, assisting with procedures, cultural orientation and documentation.</p>
+        <ul class="tags"><li>Vietnamese native</li><li>Interpretation</li><li>Documentation</li><li>Cross-cultural communication</li></ul>
+        <div class="xp-type" aria-hidden="true"><span lang="zh-Hant">中</span><i>↔</i><span>VN</span><b>10–20<small>participants</small></b></div>
       </div>
-      <div class="xp-metric-grid">
-        <div class="xp-metric-card"><div class="xp-metric-number">中–VN</div><div class="xp-metric-title">Interpretation</div><p>Supported Chinese–Vietnamese communication for student delegations.</p></div>
-        <div class="xp-metric-card"><div class="xp-metric-number">10–20</div><div class="xp-metric-title">Participants</div><p>Helped international student groups navigate program procedures.</p></div>
-        <div class="xp-metric-card"><div class="xp-metric-number">3</div><div class="xp-metric-title">Working languages</div><p>Vietnamese, Mandarin, and English in academic settings.</p></div>
-        <div class="xp-metric-card"><div class="xp-metric-number">30+</div><div class="xp-metric-title">Academic events</div><p>Supported lectures, workshops, and event operations.</p></div>
+      <div class="xp-vis xp-vis--collage">
+        <figure class="ph par-wrap clip"><img data-par src="images/interpreter-moe-1.jpg" alt="Baro interpreting at a Ministry of Education program" loading="lazy" decoding="async"><figcaption>Interpreter · Ministry of Education Program</figcaption></figure>
+        <figure class="ph ph--b par-wrap clip"><img data-par src="images/career-orientation-event.jpg" alt="Trilingual interpretation at a career orientation event" loading="lazy" decoding="async"><figcaption>Trilingual Interpreter · Career Orientation Event</figcaption></figure>
       </div>
+    </article>
+
+    <!-- 03 -->
+    <article class="xp rv">
+      <div class="xp-vis xp-vis--single">
+        <figure class="ph ph--wide par-wrap clip"><img data-par src="images/teaching-assistant.jpg" alt="Baro supporting a lecture as teaching and event assistant" loading="lazy" decoding="async"><figcaption>Teaching &amp; Program Support</figcaption></figure>
+        <div class="stamp" aria-hidden="true"><b>30+</b><span>academic events</span></div>
+      </div>
+      <div class="xp-txt">
+        <p class="xp-n">03</p>
+        <h3>Teaching <em class="serif">&amp;</em> Event Assistant</h3>
+        <p class="xp-meta">Providence University · Part-time · 2022 — 2026</p>
+        <p>Provided real-time Chinese–Vietnamese–English interpretation during lectures and workshops. Supported 30+ academic events including guest check-ins, attendance records, logistics and technical setup.</p>
+        <ul class="tags"><li>Trilingual interpretation</li><li>Attendance records</li><li>Logistics</li><li>Event support</li></ul>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="sec skills" id="skills" data-nav="about" aria-labelledby="skills-h">
+  <div class="wrap">
+    <p class="eyebrow rv"><span>(04)</span> Skills</p>
+    <h2 class="mega mega--md" id="skills-h">
+      <span class="ln"><span class="ln-i">What I <em class="serif">use.</em></span></span>
+    </h2>
+
+    <div class="skill-grid">
+      <section class="sk rv">
+        <h3>Data</h3>
+        <ul>
+          <li><b>SQL Server</b><span>JOIN · GROUP BY · CTEs · CASE WHEN · window functions · RFM segmentation</span></li>
+          <li><b>Excel</b><span>Data organization, tracking, analysis</span></li>
+          <li><b>Google Sheets</b><span>Data organization, tracking, analysis</span></li>
+        </ul>
+      </section>
+      <section class="sk rv">
+        <h3>Business</h3>
+        <ul>
+          <li><b>B2B research</b><span>Structured prospect databases</span></li>
+          <li><b>Documentation</b><span>Administrative support, attendance records</span></li>
+          <li><b>E-commerce analysis</b><span>Sales, customer and product performance</span></li>
+          <li><b>Cross-border communication</b><span>Taiwan ↔ Vietnam</span></li>
+        </ul>
+      </section>
+      <section class="sk rv">
+        <h3>Create</h3>
+        <ul>
+          <li><b>Canva</b><span>Communication and visuals</span></li>
+          <li><b>Notion</b><span>Organization</span></li>
+          <li><b>AI-assisted research</b><span>ChatGPT / Claude for workflow support</span></li>
+        </ul>
+      </section>
+      <section class="sk sk--dark rv">
+        <h3>Communicate</h3>
+        <ul>
+          <li><b>Vietnamese</b><span>Native</span></li>
+          <li><b lang="zh-Hant">中文 Mandarin</b><span>TOCFL B2</span></li>
+          <li><b>English</b><span>TOEIC 825</span></li>
+        </ul>
+      </section>
     </div>
-    <div class="xp-other reveal">
-      <div class="xp-other-head"><span class="eyebrow">Additional experience</span><h3>Trilingual interpretation &amp; structured information</h3></div>
-      <div class="xp-other-grid">
-        <article class="xp-other-card">
-          <div class="xp-other-year">2022 – 2026</div>
-          <div class="xp-other-body">
-            <h4>Teaching &amp; Event Assistant</h4>
-            <p class="xp-other-org">Providence University · Part-time</p>
-            <p>Provided real-time Chinese–Vietnamese–English interpretation during lectures and workshops.</p>
-            <p>Supported 30+ academic events including guest check-ins, attendance records, logistics, and technical setup.</p>
+  </div>
+
+  <div class="marquee marquee--big" aria-hidden="true">
+    <div class="marquee-track">
+      <span>SQL Server</span><span class="sep">/</span><span>B2B Research</span><span class="sep">/</span><span>Interpretation</span><span class="sep">/</span><span>Excel</span><span class="sep">/</span><span>E-commerce</span><span class="sep">/</span><span>Documentation</span><span class="sep">/</span>
+      <span>SQL Server</span><span class="sep">/</span><span>B2B Research</span><span class="sep">/</span><span>Interpretation</span><span class="sep">/</span><span>Excel</span><span class="sep">/</span><span>E-commerce</span><span class="sep">/</span><span>Documentation</span><span class="sep">/</span>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION + CREDENTIALS -->
+<section class="sec edu" id="education" data-nav="about" aria-labelledby="edu-h">
+  <div class="wrap edu-wrap">
+    <div class="edu-main">
+      <p class="eyebrow rv"><span>(05)</span> Education</p>
+      <h2 class="mega mega--md" id="edu-h"><span class="ln"><span class="ln-i">Taiwan, <em class="serif">twice</em> over.</span></span></h2>
+
+      <ol class="tl">
+        <li class="tl-i rv">
+          <img class="logo" src="images/logo-ntut.png" alt="NTUT Taipei Tech logo" width="64" height="64" loading="lazy" decoding="async">
+          <div>
+            <p class="tl-d">Sep 2026 — Present</p>
+            <h3>MBA</h3>
+            <p class="tl-s">National Taipei University of Technology (NTUT / Taipei Tech)</p>
+            <p class="mute">Building broader business, digital transformation, operations and analytical decision-making capabilities.</p>
           </div>
-        </article>
-        <article class="xp-other-card">
-          <div class="xp-other-year">2025 – 2026</div>
-          <div class="xp-other-body">
-            <h4>Business Development &amp; Telesales Intern</h4>
-            <p class="xp-other-org">Du Bang Customs Clearance Logistics · Taichung</p>
-            <p>Researched Vietnamese B2B prospects and built a structured prospect database to support Taiwan–Vietnam logistics services.</p>
-            <p>Generated 20+ qualified leads within the first two months and managed follow-up communications.</p>
+        </li>
+        <li class="tl-i rv">
+          <img class="logo" src="images/logo-providence.png" alt="Providence University logo" width="64" height="64" loading="lazy" decoding="async">
+          <div>
+            <p class="tl-d">2022 — 2026 · Graduated</p>
+            <h3>BBA · International Business Administration</h3>
+            <p class="tl-s">Providence University (<span lang="zh-Hant">靜宜大學</span>), Taichung, Taiwan</p>
+            <p class="mute">International business foundation with extensive cross-cultural involvement and student-program support experience.</p>
           </div>
-        </article>
-      </div>
+        </li>
+        <li class="tl-i rv">
+          <img class="logo" src="images/logo-evacademy.png" alt="EV Academy logo" width="64" height="64" loading="lazy" decoding="async">
+          <div>
+            <p class="tl-d">Summer 2023 · 6 weeks</p>
+            <h3>Intensive English Program</h3>
+            <p class="tl-s">EV Academy, Cebu, Philippines</p>
+            <p class="mute">Full-immersion English study with international classmates in a multicultural environment.</p>
+          </div>
+        </li>
+      </ol>
     </div>
+
+    <aside class="cred rv" id="credentials" aria-labelledby="cred-h">
+      <h3 id="cred-h" class="cred-h">Credentials</h3>
+      <ul class="cred-list">
+        <li><span class="cred-v">825</span><span class="cred-k">TOEIC</span></li>
+        <li><span class="cred-v">B2</span><span class="cred-k">TOCFL Mandarin</span></li>
+        <li>
+          <button class="cred-btn" type="button" data-img="images/hackerrank-sql-cert.jpg" data-cap="HackerRank · SQL Skills Certification">
+            <span class="cred-v">SQL</span><span class="cred-k">HackerRank <i>View ↗</i></span>
+          </button>
+        </li>
+        <li>
+          <button class="cred-btn" type="button" data-img="images/hubspot-inbound-sales-cert.jpg" data-cap="HubSpot Academy · Inbound Sales">
+            <span class="cred-v">Inbound<br>Sales</span><span class="cred-k">HubSpot Academy <i>View ↗</i></span>
+          </button>
+        </li>
+      </ul>
+    </aside>
   </div>
 </section>
 
-<section id="skills">
+<!-- PLAYGROUND / BEYOND THE RESUME -->
+<section class="sec play" id="playground" data-nav="playground" aria-labelledby="play-h">
   <div class="wrap">
-    <div class="section-head reveal">
-      <span class="eyebrow">Capabilities</span>
-      <h2>Languages, documentation &amp; data skills</h2>
-      <p class="section-intro">Multilingual strengths supported by accurate information handling and practical analytics.</p>
-    </div>
+    <p class="eyebrow rv"><span>(06)</span> Playground</p>
+    <h2 class="mega" id="play-h">
+      <span class="ln"><span class="ln-i">Beyond</span></span>
+      <span class="ln"><span class="ln-i">the <em class="serif">resume.</em></span></span>
+    </h2>
+    <p class="sub rv">Campus life, cultural exchange and the programs I've helped run.</p>
 
-    <div class="xp-proof-grid reveal">
-      <div class="xp-proof-card">
-        <span class="xp-proof-step">01</span>
-        <h4>Languages &amp; Interpretation</h4>
-        <p><strong>Vietnamese:</strong> Native · <strong>Mandarin:</strong> TOCFL B2 · <strong>English:</strong> TOEIC 825.</p>
-        <p>Chinese–Vietnamese and Chinese–Vietnamese–English interpretation during academic programs, lectures, and workshops.</p>
+    <div class="collage" id="collage">
+      <figure class="cp cp--1 par-wrap clip"><img data-par src="images/ev-academy-philippines.jpg" alt="Classmates at EV Academy in the Philippines" loading="lazy" decoding="async"><figcaption><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>Cebu · 2023 — EV Academy</figcaption></figure>
+      <figure class="cp cp--2 par-wrap clip"><img data-par src="images/career-orientation-event.jpg" alt="Career orientation event with trilingual interpretation" loading="lazy" decoding="async"><figcaption>Trilingual Interpreter · Career Orientation Event</figcaption></figure>
+      <figure class="cp cp--3 par-wrap clip"><img data-par src="images/international-culture-week.jpg" alt="International Culture Week cultural exchange" loading="lazy" decoding="async"><figcaption>International Culture Week · Cultural Exchange</figcaption></figure>
+      <figure class="cp cp--4 par-wrap clip"><img data-par src="images/interpreter-moe-1.jpg" alt="Interpreting at a Ministry of Education program" loading="lazy" decoding="async"><figcaption>Interpreter · Ministry of Education Program</figcaption></figure>
+      <figure class="cp cp--5 par-wrap clip"><img data-par src="images/teaching-assistant.jpg" alt="Teaching and program support" loading="lazy" decoding="async"><figcaption>Teaching &amp; Program Support</figcaption></figure>
+      <figure class="cp cp--6 par-wrap clip"><img data-par src="images/vsapu-inauguration.jpg" alt="Vietnamese Student Association inauguration event" loading="lazy" decoding="async"><figcaption>Vietnamese Student Association · Event Support</figcaption></figure>
+
+      <div class="chat" aria-label="Notes">
+        <p class="bubble bubble--dark">Vietnam → Taiwan → what's next?</p>
+        <p class="bubble">currently learning: digital transformation</p>
+        <p class="typing" aria-hidden="true"><i></i><i></i><i></i></p>
       </div>
-      <div class="xp-proof-card">
-        <span class="xp-proof-step">02</span>
-        <h4>Documentation &amp; Information Handling</h4>
-        <p>Administrative support, documentation, attendance records, structured prospect databases, B2B research, and data organization.</p>
-      </div>
-      <div class="xp-proof-card">
-        <span class="xp-proof-step">03</span>
-        <h4>Data &amp; Analytics</h4>
-        <p><strong>SQL Server:</strong> JOIN, GROUP BY, CTEs, CASE WHEN, window functions, and RFM segmentation.</p><p><strong>Excel / Google Sheets:</strong> data organization, tracking, and analysis.</p>
-      </div>
-      <div class="xp-proof-card">
-        <span class="xp-proof-step">04</span>
-        <h4>Supporting Tools</h4>
-        <p>Notion and Canva for organization and communication; AI-assisted research and workflow support using ChatGPT / Claude.</p>
-      </div>
+      <span class="note hand" aria-hidden="true">international life ↘</span>
     </div>
   </div>
 </section>
 
-<section id="education">
+<!-- CONTACT -->
+<section class="contact" id="contact" data-nav="contact" aria-labelledby="contact-h">
   <div class="wrap">
-    <div class="section-head reveal"><span class="eyebrow">Education</span><h2>Academic background</h2></div>
-    <div class="edu-timeline reveal">
-      <div class="edu-item upcoming">
-        <div class="edu-logo"><img src="images/logo-ntut.png" alt="NTUT Taipei Tech logo"></div>
-        <div class="edu-body"><div class="when">Sep 2026 – Present</div><h4>MBA</h4><div class="org">National Taipei University of Technology (NTUT / Taipei Tech)</div><p>Building broader business, digital transformation, operations, and analytical decision-making capabilities.</p></div>
-      </div>
-      <div class="edu-item">
-        <div class="edu-logo"><img src="images/logo-providence.png" alt="Providence University logo"></div>
-        <div class="edu-body"><div class="when">2022 – 2026 · Graduated</div><h4>BBA · International Business Administration</h4><div class="org">Providence University (靜宜大學), Taichung, Taiwan</div><p>International business foundation with extensive cross-cultural involvement and student-program support experience.</p></div>
-      </div>
-      <div class="edu-item featured">
-        <div class="edu-logo"><img src="images/logo-evacademy.png" alt="EV Academy logo"></div>
-        <div class="edu-body"><div class="when">Summer 2023 · 6 Weeks</div><h4>Intensive English Program</h4><div class="org">EV Academy, Cebu, Philippines</div><p>Full-immersion English study with international classmates in a multicultural environment.</p></div>
-      </div>
+    <p class="eyebrow eyebrow--light rv"><span>(07)</span> Contact</p>
+    <h2 class="mega mega--xl" id="contact-h">
+      <span class="ln"><span class="ln-i">Let's</span></span>
+      <span class="ln"><span class="ln-i">make</span></span>
+      <span class="ln"><span class="ln-i"><em class="serif">something</em></span></span>
+      <span class="ln"><span class="ln-i">useful.</span></span>
+    </h2>
+
+    <div class="contact-grid">
+      <p class="contact-p rv">I'm interested in entry-level Vietnamese audio transcription, language-data support, multilingual documentation and data quality roles, as well as practical data analysis.</p>
+
+      <a class="say mag" href="mailto:vanbao7448@gmail.com?subject=Hello%20Baro">Say hello <svg class="ic"><use href="#i-arrow"/></svg></a>
+
+      <dl class="c-list rv">
+        <div><dt>Email</dt><dd><a href="mailto:vanbao7448@gmail.com">vanbao7448@gmail.com</a></dd></div>
+        <div><dt>Phone</dt><dd><a href="tel:+886901359739">+886 901 359 739</a></dd></div>
+        <div><dt>Location</dt><dd>Taipei, Taiwan</dd></div>
+        <div><dt>GitHub</dt><dd><a href="https://github.com/baronguyen67" target="_blank" rel="noopener">github.com/baronguyen67 ↗</a></dd></div>
+        <div><dt>Instagram</dt><dd><a href="https://www.instagram.com/baoba.o2003" target="_blank" rel="noopener">@baoba.o2003 ↗</a></dd></div>
+        <div><dt>Resume</dt><dd><a href="resume.pdf" target="_blank" rel="noopener">Download PDF ↗</a></dd></div>
+      </dl>
     </div>
   </div>
+
+  <footer class="foot">
+    <div class="wrap foot-in">
+      <span>© 2026 Nguyen Van Bao (<span lang="zh-Hant">阮文寶</span>)</span>
+      <span class="foot-links"><a href="https://github.com/baronguyen67" target="_blank" rel="noopener">GitHub</a><a href="https://www.instagram.com/baoba.o2003" target="_blank" rel="noopener">Instagram</a><a href="#top">Back to top ↑</a></span>
+    </div>
+  </footer>
 </section>
 
-<section id="activities">
-  <div class="wrap">
-    <div class="section-head reveal"><span class="eyebrow">Campus Life</span><h2>Activities &amp; Involvement</h2></div>
-    <div class="gallery-grid reveal">
-      <figure class="gallery-item"><div class="gallery-img"><img src="images/ev-academy-philippines.jpg" alt="EV Academy"></div><figcaption>EV Academy · Intensive English Program</figcaption></figure>
-      <figure class="gallery-item"><div class="gallery-img"><img src="images/career-orientation-event.jpg" alt="Career Orientation Event"></div><figcaption>Trilingual Interpreter · Career Orientation Event</figcaption></figure>
-      <figure class="gallery-item"><div class="gallery-img"><img src="images/international-culture-week.jpg" alt="International Culture Week"></div><figcaption>International Culture Week · Cultural Exchange</figcaption></figure>
-      <figure class="gallery-item"><div class="gallery-img"><img src="images/interpreter-moe-1.jpg" alt="MOE Program"></div><figcaption>Interpreter · Ministry of Education Program</figcaption></figure>
-      <figure class="gallery-item"><div class="gallery-img"><img src="images/teaching-assistant.jpg" alt="Teaching Assistant"></div><figcaption>Teaching &amp; Program Support</figcaption></figure>
-      <figure class="gallery-item"><div class="gallery-img"><img src="images/vsapu-inauguration.jpg" alt="Vietnamese Student Association"></div><figcaption>Vietnamese Student Association · Event Support</figcaption></figure>
-    </div>
-  </div>
-</section>
+</main>
 
-<section id="certificates">
-  <div class="wrap">
-    <div class="section-head reveal"><span class="eyebrow">Credentials</span><h2>Certificates &amp; Language Scores</h2></div>
-    <div class="lang-highlight reveal">
-      <div class="lang-score"><span class="score">825</span><span class="score-label">TOEIC</span></div>
-      <div class="lang-score"><span class="score">B2</span><span class="score-label">TOCFL Mandarin</span></div>
-    </div>
-    <div class="cert-grid reveal">
-      <figure class="cert-item"><div class="cert-img"><img src="images/hackerrank-sql-cert.jpg" alt="HackerRank SQL Certificate"></div><figcaption>HackerRank · SQL Skills Certification</figcaption></figure>
-      <figure class="cert-item"><div class="cert-img"><img src="images/hubspot-inbound-sales-cert.jpg" alt="HubSpot Inbound Sales Certificate"></div><figcaption>HubSpot Academy · Inbound Sales</figcaption></figure>
-    </div>
-  </div>
-</section>
+<dialog class="modal" id="certModal" aria-label="Certificate preview">
+  <form method="dialog"><button class="modal-x" aria-label="Close preview">✕</button></form>
+  <img id="certImg" src="" alt="" decoding="async">
+  <p id="certCap"></p>
+</dialog>
 
-<section id="projects">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <span class="eyebrow">Work Samples</span>
-      <h2>Projects that connect data with business questions</h2>
-      <p class="section-intro">SQL projects built around practical e-commerce, customer, product, and decision-support questions.</p>
-    </div>
-
-    <div class="project-list reveal">
-      <div class="project-card">
-        <div>
-          <div class="project-status">Completed · SQL Server</div>
-          <h3>E-commerce Sales &amp; Customer Behavior Analysis</h3>
-          <p class="desc">Analyzed <strong>23,935 sales records</strong> across <strong>10,695 orders</strong> and <strong>9,133 customers</strong>. Evaluated monthly sales trends, product/category concentration, repeat-customer value, top customers, and territory performance. Repeat customers represented only <strong>13.2%</strong> of buyers but generated <strong>28.7%</strong> of revenue.</p>
-          <div class="project-tags"><span>SQL Server</span><span>CTEs</span><span>Window Functions</span><span>E-commerce</span></div>
-          <div class="hero-actions" style="margin-top:1.25rem"><a class="btn btn-primary" href="https://github.com/baronguyen67/ecommerce-sales-customer-behavior-analysis" target="_blank" rel="noopener">View GitHub Project &rarr;</a></div>
-        </div>
-      </div>
-
-      <div class="project-card">
-        <div>
-          <div class="project-status">Completed · SQL Server</div>
-          <h3>Customer Segmentation &amp; Product Performance Analysis</h3>
-          <p class="desc">Analyzed <strong>$6.52M in sales</strong> across <strong>25,728 orders</strong> and <strong>17,415 customers</strong>. Built a percentile-based RFM framework and compared customer, product, category, and regional performance. The analysis identified <strong>3,065 Champions</strong>, while Corporate customers generated <strong>58.93%</strong> of sales.</p>
-          <div class="project-tags"><span>SQL Server</span><span>RFM</span><span>PERCENT_RANK</span><span>Customer Analytics</span></div>
-          <div class="hero-actions" style="margin-top:1.25rem"><a class="btn btn-primary" href="https://github.com/baronguyen67/customer-segmentation-product-performance-analysis" target="_blank" rel="noopener">View GitHub Project &rarr;</a></div>
-        </div>
-      </div>
-
-      <div class="project-card placeholder">
-        <div>
-          <div class="project-status">Learning Next</div>
-          <h3>Digital Marketing &amp; Website Conversion Analysis</h3>
-          <p class="desc">Planned next project using website sessions, traffic sources, campaigns, orders, and conversion data to connect acquisition performance with e-commerce operations.</p>
-          <div class="project-tags"><span>SQL</span><span>Web Analytics</span><span>Conversion</span><span>Learning in Progress</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="contact">
-  <div class="wrap contact-grid">
-    <div class="contact-info reveal">
-      <span class="eyebrow">Connect</span>
-      <h2>Let's talk</h2>
-      <p>I'm interested in entry-level Vietnamese audio transcription, language-data support, multilingual documentation, and data quality roles, as well as practical data analysis.</p>
-      <div class="contact-channels">
-        <div class="contact-channel"><span class="k">Email</span><a href="mailto:vanbao7448@gmail.com">vanbao7448@gmail.com</a></div>
-        <div class="contact-channel"><span class="k">Phone</span><a href="tel:+886901359739">+886 901 359 739</a></div>
-        <div class="contact-channel"><span class="k">Location</span><span>Taipei, Taiwan</span></div>
-        <div class="contact-channel"><span class="k">GitHub</span><a href="https://github.com/baronguyen67" target="_blank" rel="noopener">github.com/baronguyen67</a></div>
-        <div class="contact-channel"><span class="k">Instagram</span><a href="https://www.instagram.com/baoba.o2003" target="_blank" rel="noopener">@baoba.o2003</a></div>
-      </div>
-    </div>
-    <form class="contact-form reveal" id="contactForm">
-      <div class="form-row"><div class="field"><label for="fname">Name</label><input type="text" id="fname" name="fname" required></div><div class="field"><label for="femail">Email</label><input type="email" id="femail" name="femail" required></div></div>
-      <div class="field"><label for="fsubject">Subject</label><input type="text" id="fsubject" name="fsubject"></div>
-      <div class="field"><label for="fmessage">Message</label><textarea id="fmessage" name="fmessage" rows="5" required></textarea></div>
-      <button type="submit" class="btn btn-primary">Send message &rarr;</button>
-      <div class="form-status" id="formStatus" role="status"></div>
-    </form>
-  </div>
-</section>
-
-<footer class="site-footer">
-  <div class="wrap"><span>© 2026 Nguyen Van Bao (阮文寶)</span><div class="footer-socials"><a href="https://github.com/baronguyen67" target="_blank" rel="noopener">GitHub</a><a href="https://www.instagram.com/baoba.o2003" target="_blank" rel="noopener">Instagram</a></div></div>
-</footer>
-
-<script src="script.js"></script>
+<script src="js/main.js" defer></script>
 </body>
 </html>
