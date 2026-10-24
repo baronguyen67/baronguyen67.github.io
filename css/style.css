@@ -1035,9 +1035,9 @@ button.cred-card{cursor:pointer}
   }
 }
 
-/* V15: Desktop circular photo turntable — mobile swipe carousel stays untouched */
+/* V16: 3D turntable shared by desktop and mobile */
 .turntable-toolbar,.turntable-footer{display:none}
-@media (min-width:901px){
+@media (min-width:0px){
   .turntable-toolbar{
     display:flex;
     align-items:center;
@@ -1292,6 +1292,201 @@ button.cred-card{cursor:pointer}
 @media (prefers-reduced-motion:reduce){
   .play .collage.turntable-ready .cp,
   .play .collage.turntable-ready .cp img{
+    transition:none!important;
+  }
+}
+
+/* V16 mobile/tablet layout: same circular turntable, optimized for touch */
+@media (max-width:900px){
+  #playground{overflow:hidden}
+  #playground .turntable-toolbar{
+    display:flex;
+    flex-direction:column;
+    flex-wrap:nowrap;
+    align-items:stretch;
+    justify-content:center;
+    gap:13px;
+    margin:34px 0 0;
+    padding:14px 0 10px;
+    border-block:1px solid var(--line);
+  }
+  #playground .turntable-intro{
+    gap:10px;
+    font-size:11px;
+    letter-spacing:.09em;
+  }
+  #playground .turntable-intro small{font-size:11px}
+  #playground .turntable-mark{width:36px;height:36px;font-size:23px}
+  #playground .turntable-controls{
+    width:100%;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+  }
+  #playground .turntable-arrow{
+    flex:none;
+    width:48px;
+    height:48px;
+    font-size:23px;
+    background:var(--ink);
+    color:#fff;
+  }
+  #playground .turntable-arrow:active{transform:scale(.95)}
+  #playground .turntable-counter{font-size:22px}
+  #playground .collage.turntable-ready{
+    --tt-card-width:clamp(185px,57vw,265px);
+    display:block;
+    position:relative;
+    isolation:isolate;
+    overflow:visible;
+    width:100%;
+    max-width:100%;
+    height:clamp(385px,112vw,515px);
+    min-height:0;
+    margin:0;
+    padding:0;
+    gap:0;
+    scroll-snap-type:none;
+    scroll-padding:0;
+    overscroll-behavior:auto;
+    scrollbar-width:none;
+    perspective:980px;
+    perspective-origin:50% 48%;
+    transform-style:preserve-3d;
+    touch-action:pan-y;
+    -webkit-user-select:none;
+    user-select:none;
+  }
+  #playground .collage.turntable-ready::before{
+    top:51%;
+    width:min(89%,490px);
+    height:clamp(100px,34vw,195px);
+    border-color:rgba(17,17,17,.25);
+  }
+  #playground .collage.turntable-ready::after{
+    bottom:15px;
+    font-size:9px;
+    letter-spacing:.1em;
+  }
+  #playground .collage.turntable-ready .cp,
+  #playground .collage.turntable-ready .cp:nth-child(even){
+    position:absolute!important;
+    top:50%;
+    left:50%;
+    right:auto!important;
+    bottom:auto!important;
+    display:block;
+    flex:none;
+    width:var(--tt-card-width)!important;
+    max-width:none!important;
+    height:calc(var(--tt-card-width) * 1.22)!important;
+    aspect-ratio:auto!important;
+    margin:0!important;
+    padding:0;
+    border-radius:22px;
+    scroll-snap-align:none;
+    box-shadow:0 8px 26px rgba(17,17,17,.12)!important;
+    transform:var(--tt-transform)!important;
+    transform-origin:center center;
+    overflow:hidden;
+    touch-action:pan-y;
+  }
+  #playground .collage.turntable-ready .cp.tt-active{
+    box-shadow:0 22px 40px rgba(17,17,17,.3),0 0 0 4px var(--paper)!important;
+  }
+  #playground .collage.turntable-ready .cp img,
+  #playground .collage.turntable-ready .cp:hover img{
+    display:block;
+    width:100%;
+    height:100%!important;
+    scale:1!important;
+    transform:none!important;
+    object-fit:cover;
+    filter:grayscale(1) contrast(1.06) brightness(.83);
+    transition:filter .55s ease;
+    pointer-events:none;
+  }
+  #playground .collage.turntable-ready .cp.tt-active img,
+  #playground .collage.turntable-ready .cp.tt-active:hover img{
+    filter:grayscale(0) contrast(1) brightness(1) saturate(1.09);
+  }
+  #playground .collage.turntable-ready .cp.tt-active::after{opacity:0}
+  #playground .collage.turntable-ready .cp .tt-photo-action{
+    display:block;
+    position:absolute;
+    inset:0;
+    z-index:5;
+    border:0;
+    width:100%;
+    height:100%;
+    background:transparent;
+    cursor:pointer;
+    touch-action:pan-y;
+  }
+  #playground .collage.turntable-ready .cp figcaption,
+  #playground .collage.turntable-ready .cp:hover figcaption{
+    position:absolute;
+    left:8px;
+    right:8px;
+    bottom:8px;
+    width:max-content;
+    max-width:calc(100% - 16px);
+    padding:7px 9px;
+    border-radius:11px;
+    white-space:normal;
+    overflow-wrap:anywhere;
+    font-size:9px;
+    letter-spacing:.02em;
+    line-height:1.35;
+    opacity:0;
+    visibility:hidden;
+    transform:translateY(5px);
+    pointer-events:none;
+    z-index:6;
+  }
+  #playground .collage.turntable-ready .cp.tt-active figcaption{
+    opacity:1;
+    visibility:visible;
+    transform:translateY(0);
+  }
+  #playground .collage.turntable-ready .chat,
+  #playground .collage.turntable-ready .note{display:none!important}
+  #playground .turntable-footer{
+    display:flex;
+    flex-direction:column;
+    align-items:stretch;
+    gap:8px;
+    margin-top:4px;
+    padding:14px 0 4px;
+  }
+  #playground .turntable-active-caption{
+    max-width:100%;
+    min-height:26px;
+    font-size:clamp(15px,4vw,19px);
+  }
+  #playground .turntable-progress{
+    width:100%;
+    justify-content:space-between;
+    gap:2px;
+  }
+  #playground .turntable-dot{
+    flex:1;
+    min-width:40px;
+    min-height:44px;
+    width:auto;
+    height:44px;
+    padding:14px 5px;
+  }
+}
+@media (max-width:390px){
+  #playground .collage.turntable-ready{
+    --tt-card-width:clamp(185px,58vw,220px);
+    height:390px;
+  }
+}
+@media (prefers-reduced-motion:reduce){
+  #playground .collage.turntable-ready .cp,
+  #playground .collage.turntable-ready .cp img{
     transition:none!important;
   }
 }
