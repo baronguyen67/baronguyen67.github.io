@@ -901,3 +901,29 @@ button.cred-card{cursor:pointer}
 @media (prefers-reduced-motion:reduce){
   #playground .collage .cp img{transition:none!important}
 }
+
+/* V12: scroll-to-original-color for mobile hero and experience photos */
+@media (max-width:767px){
+  /* Safari can remember :hover after a tap; use scroll state as the source of truth. */
+  .hero-card .hero-img,
+  .hero-card:hover .hero-img{
+    filter:grayscale(1) contrast(1.06) brightness(.94);
+    transition:filter .85s cubic-bezier(.22,.8,.2,1),transform 1.2s var(--ease);
+  }
+  .hero-card.is-color .hero-img,
+  .hero-card.is-color:hover .hero-img{
+    filter:grayscale(0) contrast(1.01) brightness(1) saturate(1.06);
+  }
+  .experience .par-wrap img,
+  .experience .par-wrap:hover img{
+    filter:grayscale(1) contrast(1.04);
+    transition:filter .85s cubic-bezier(.22,.8,.2,1),scale .8s var(--ease);
+  }
+  .experience .par-wrap.is-color img,
+  .experience .par-wrap.is-color:hover img{
+    filter:grayscale(0) contrast(1) saturate(1.06);
+  }
+}
+@media (prefers-reduced-motion:reduce) and (max-width:767px){
+  .hero-card .hero-img,.experience .par-wrap img{transition:none!important}
+}
